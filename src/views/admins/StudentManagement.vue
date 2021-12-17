@@ -11,7 +11,12 @@
             <b-card-header class="border-0">
               <h3 class="mb-0">Current Student</h3>
             </b-card-header>
-
+            <el-button 
+              size="mini"
+              type="success"
+              @click="handleImport"
+              class="import-button">
+              Add Student List</el-button>
             <el-table
               class="table-responsive table"
               header-row-class-name="thead-light"
@@ -24,53 +29,32 @@
               <el-table-column
                 label="Fullname"
                 min-width="150px"
-                prop="fullname"
+                prop="student.fullname"
               >
               </el-table-column>
               <el-table-column
                 label="Telephone Number"
-                prop="phone"
+                prop="student.phone"
                 min-width="140px"
               >
               </el-table-column>
-              <!-- <el-table-column label="Email"
-                             prop="email"
-                             min-width="250px">
-            </el-table-column> -->
               <el-table-column
                 label="Gender"
                 min-width="110px"
-                prop="gender"
+                prop="student.gender"
               >
-                <template v-slot="{ row }">
-                  <badge
-                    class="badge-dot mr-4"
-                    type=""
-                    v-if="row.gender == 'nam'"
-                  >
-                    <i :class="`bg-info`"></i>
-                    <span class="status" :class="`text-info`">{{
-                      row.gender
-                    }}</span>
-                  </badge>
-                  <badge class="badge-dot mr-4" type="" v-else>
-                    <i :class="`bg-warning`"></i>
-                    <span class="status" :class="`text-warning`">{{
-                      row.gender
-                    }}</span>
-                  </badge>
-                </template>
               </el-table-column>
               <el-table-column label="Action" min-width="290px" align="center">
                 <template slot-scope="scope">
                   <el-button
                     size="mini"
-                    type="success"
+                    type="danger"
                     @click="handleDetail(scope.$index, scope.row)"
                     >Detail</el-button
                   >
                   <el-button
                     size="mini"
+                    type="danger"
                     @click="handleEdit(scope.$index, scope.row)"
                     >Edit</el-button
                   >
@@ -83,45 +67,14 @@
                 </template>
               </el-table-column>
 
-              <!-- <el-table-column label="Users" min-width="190px">
-                <div class="avatar-group">
-                    <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip"
-                       data-original-title="Ryan Tompson">
-                        <img alt="Image placeholder" src="/img/theme/team-1.jpg">
-                    </a>
-                    <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip"
-                       data-original-title="Romina Hadid">
-                        <img alt="Image placeholder" src="/img/theme/team-2.jpg">
-                    </a>
-                    <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip"
-                       data-original-title="Alexander Smith">
-                        <img alt="Image placeholder" src="/img/theme/team-3.jpg">
-                    </a>
-                    <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip"
-                       data-original-title="Jessica Doe">
-                        <img alt="Image placeholder" src="/img/theme/team-4.jpg">
-                    </a>
-                </div>
-            </el-table-column>
-
-            <el-table-column label="Completion"
-                             prop="completion"
-                             min-width="240px">
-                <template v-slot="{row}">
-                    <div class="d-flex align-items-center">
-                        <span class="completion mr-2">{{row.completion}}%</span>
-                        <div>
-                            <base-progress :type="row.statusType" :value="row.completion"/>
-                        </div>
-                    </div>
-                </template>
-            </el-table-column> -->
             </el-table>
             
             
             <b-card-footer class="py-4 d-flex justify-content-end position-relative">
               <!-- <base-pagination v-model="currentPage" :per-page="20" :total="50" :@input="getTeacherData(currentPage)"></base-pagination> -->
-              <el-row class="position-absolute" v-if="multipleSelection.length > 1">
+              <el-row 
+                class="position-absolute" 
+                v-if="multipleSelection.length > 1">
                 <el-button type="danger" @click="dialogMultiDelete=true">Xoá các lựa chọn</el-button>
               </el-row>
               <b-pagination
@@ -171,17 +124,8 @@
           ></el-col>
           <el-col :span="16"
             ><div class="grid-content">
-              <!-- <el-row :gutter="20">
-                  <el-col :span="12"><div class="grid-content ">
-                    Full Name
-                  </div>
-                  </el-col>
-                  <el-col :span="12">
-                    <div class="grid-content ">
-                      {{teacher.fullname}}
-                    </div>
-                  </el-col>
-                </el-row> -->
+                <h3 class="mb-0">Thông tin cơ bản</h3>
+              <br />
               <el-table :data="student" style="width: 100%">
                 <el-table-column prop="key" label="Thông tin" width="180">
                 </el-table-column>
@@ -271,59 +215,6 @@
               <el-radio label="Female"></el-radio>
             </el-radio-group>
           </el-form-item>
-          <!-- <el-form-item label="Activity zone">
-            <el-select
-              v-model="form.region"
-              placeholder="please select your zone"
-            >
-              <el-option label="Zone one" value="shanghai"></el-option>
-              <el-option label="Zone two" value="beijing"></el-option>
-            </el-select>
-          </el-form-item> -->
-          <!-- <el-form-item label="Activity time">
-            <el-col :span="11">
-              <el-date-picker
-                type="date"
-                placeholder="Pick a date"
-                v-model="form.date1"
-                style="width: 100%"
-              ></el-date-picker>
-            </el-col>
-            <el-col class="line" :span="2">-</el-col>
-            <el-col :span="11">
-              <el-time-picker
-                placeholder="Pick a time"
-                v-model="form.date2"
-                style="width: 100%"
-              ></el-time-picker>
-            </el-col>
-          </el-form-item>
-          <el-form-item label="Instant delivery">
-            <el-switch v-model="form.delivery"></el-switch>
-          </el-form-item>
-          <el-form-item label="Activity type">
-            <el-checkbox-group v-model="form.type">
-              <el-checkbox label="Online activities" name="type"></el-checkbox>
-              <el-checkbox
-                label="Promotion activities"
-                name="type"
-              ></el-checkbox>
-              <el-checkbox label="Offline activities" name="type"></el-checkbox>
-              <el-checkbox
-                label="Simple brand exposure"
-                name="type"
-              ></el-checkbox>
-            </el-checkbox-group>
-          </el-form-item>
-          <el-form-item label="Resources">
-            <el-radio-group v-model="form.resource">
-              <el-radio label="Sponsor"></el-radio>
-              <el-radio label="Venue"></el-radio>
-            </el-radio-group>
-          </el-form-item>
-          <el-form-item label="Activity form">
-            <el-input type="textarea" v-model="form.desc"></el-input>
-          </el-form-item> -->
           <el-form-item>
             <el-button type="primary" @click="onSubmitEdit">Update</el-button>
             <el-button @click="dialogEdit = false">Cancel</el-button>
@@ -399,9 +290,7 @@ import {
 //   import projects from '../Tables/projects'
 import projects from "../Tables/projects";
 import users from "../Tables/users";
-//   import LightTable from "../Tables/RegularTables/LightTable";
-//   import DarkTable from "../Tables/RegularTables/DarkTable";
-// import { get } from '../services/services'
+import { mapGetters } from "vuex";
 import { get, put,del, post } from "../../services/services";
 import Vue from "vue";
 Vue.prototype.$confirm = MessageBox.confirm;
@@ -463,21 +352,46 @@ export default {
       multipleSelection: [],
     };
   },
+  created() {
+    // this.fetchData();
+    // this.getClassData()
+  },
+  watch: {
+    keyword(after, before) {
+      this.getResults();
+    },
+    "$route.params.id": function (id) {
+      this.getStudentData();
+    },
+    "$route.params.id": function (id) {
+      this.handleImport();
+    },
+    
+  },
+  computed: {
+    ...mapGetters({
+      // map `this.doneCount` to `this.$store.getters.doneTodosCount`
+      user: "user",
+    }),
+  },
   methods: {
     getStudentData(currentPage) {
-      let url = "http://localhost:8000/api/admin/student/getall?page=" + currentPage;
+      let url = "http://localhost:8000/api/admin/class/" + this.$route.params.id +"?page=" + this.currentPage;
+      // console.log("xxx",url);
       get(url)
         .then((res) => {
           // console.log("Respon", res);
           this.perPage = res.data.meta.per_page;
           this.totalPage = res.data.meta.total;
           this.posts = res.data.data;
-          //   this.arrTeacher = res.data
-          //   console.log(this.arrTeacher.length)
+          // console.log("XXXXXXXX",this.posts[0]);
         })
         .catch((err) => {
           alert(err);
         });
+    },
+    handleImport(){
+      this.$router.push("/admin/student/upload/"+this.$route.params.id);
     },
     handleSelectionChange(val) {
       // this.currentRow = val;

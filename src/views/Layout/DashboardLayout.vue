@@ -33,15 +33,25 @@
                     name: 'Teacher Management',
                     path: '/admin/teacher',
                     icon: 'ni ni-key-25 text-info'
-                  }">
-        </sidebar-item> 
-        <sidebar-item 
-          v-if="role == 0"
-          :link="{
-            name: 'Student Management',
-            path: '/admin/student',
-            icon: 'ni ni-single-02 text-info'
-          }"
+                  }"
+        >
+          <sidebar-item
+          v-for="(item, index) in subjectObj"
+              :item="item"
+              :index="index"
+              :key="item.id"
+              :link="{
+                name: item.subjectName,
+                path: '/admin/subject/' + item.id,
+              }"
+        ></sidebar-item>
+        </sidebar-item>
+        <sidebar-item v-if="role == 0"
+                :link="{
+                  name: 'Student Management',
+                  path: '/admin/student',
+                  icon: 'ni ni-single-02 text-info'
+                }"
         > 
           <sidebar-item
             v-for="(item, index) in gradeObj"
@@ -54,6 +64,27 @@
               }"
           ></sidebar-item> 
           </sidebar-item>
+        <sidebar-item v-if="role == 0"
+                  :link="{
+                    name: 'Test and Mark Management',
+                    path: '/admin/test&mark',
+                    icon: 'ni ni-key-25 text-info'
+                  }"
+        ></sidebar-item>
+        <sidebar-item v-if="role == 0"
+                  :link="{
+                    name: 'Conduct Management',
+                    path: '/admin/conduct',
+                    icon: 'ni ni-key-25 text-info'
+                  }"
+        ></sidebar-item>
+        <sidebar-item v-if="role == 0"
+                  :link="{
+                    name: 'Teacher Assignment',
+                    path: '/admin/assign/teacher',
+                    icon: 'ni ni-key-25 text-info'
+                  }"
+        ></sidebar-item>
       </template>
     </side-bar>
     <div class="main-content">
@@ -113,6 +144,7 @@ export default {
     data() {
     return {
       gradeObj: [],
+      subjectObj:[],
     };
   },
     methods: {
@@ -122,17 +154,24 @@ export default {
           initScrollbar('sidenav');
         }
       },
-      fetchData() {
+      fetchGradeData() {
       if (this.$store.getters.role == 0) {
-        let url =
-          "http://localhost:8000/api/admin/grade/getall" 
+        let url ="http://localhost:8000/api/admin/grade/getall" 
         get(url)
           .then((res) => {
-            // console.log(res);
             this.gradeObj = res.data.data;
-            // this.classObj = res.data.data;
-            console.log("grade",this.gradeObj);
-            //   this.keyTeacher = res.data.User.data.fullname
+          })
+          .catch((err) => {
+            alert(err);
+          });
+        }
+      },
+      fetchSubjectData() {
+      if (this.$store.getters.role == 0) {
+        let url ="http://localhost:8000/api/admin/subject/getall" 
+        get(url)
+          .then((res) => {
+            this.subjectObj = res.data.data;
           })
           .catch((err) => {
             alert(err);
@@ -143,7 +182,8 @@ export default {
     
     mounted() {
       this.initScrollbar()
-      this.fetchData()
+      this.fetchGradeData()
+      this.fetchSubjectData()
     }
   };
 </script>

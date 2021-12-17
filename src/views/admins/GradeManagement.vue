@@ -304,70 +304,37 @@ export default {
     };
   },
   created() {
-    this.fetchData();
+    // this.fetchData();
+    // this.getClassData()
   },
   watch: {
     keyword(after, before) {
       this.getResults();
     },
     "$route.params.id": function (id) {
-      this.fetchData();
+      this.getClassData();
     },
+    
   },
   computed: {
     ...mapGetters({
-      // map `this.doneCount` to `this.$store.getters.doneTodosCount`
+      //map `this.doneCount` to `this.$store.getters.doneTodosCount`
       user: "user",
     }),
   },
   methods: {
-    fetchData() {
-      // console.log(store.getters.user.id)
-      let id = this.$route.params.id;
-      console.log("id",id);
-      const keyGrade = JSON.parse(localStorage.getItem(""));
-      let url = "http://localhost:8000/api/admin/class/in/grade/getall/"+id;
-      get(url)
-        .then((res) => {
-          // console.log(res);
-          this.classObj = res.data.data;
-          //   console.log(this.classObj);
-          //   this.keyTeacher = res.data.User.data.fullname
-          this.getClassData(this.currentPage);
-        })
-        .catch((err) => {
-          alert(err);
-        });
-      // } else {
-      //   this.$router.push("/admin");
-      //   this.showNotification("danger", "Bạn không có quyền truy cập");
-      // }
-    },
     getClassData(currentPage) {
-      // this.fetchData();
-      console.log("this.$route", this.$route);
-      // console.log("currentPage",currentPage);
-      //   let classSubject_id = 0;
-      //   let classSubject_arr = localStorage.getItem("teachClass")
-      //   classSubject_arr.forEach(function (item, index, array) {
-      //     // console.log(item, index);
-      //     if (item.lophoc_id == this.$route.params.id) classSubject_id = item.id;
-      //   });
       let url =
-        "http://localhost:8000/api/admin/grade/"+ this.$route.params.id +"/class/"+ "2" +"?page="+this.currentPage ;
-      console.log("URL",url);
+        "http://localhost:8000/api/admin/grade/"+ this.$route.params.id +"?page="+ this.currentPage ;
+      // console.log("URL",url);
       get(url)
         .then((res) => {
           // console.log("Respon", res);
           this.perPage = res.data.data.per_page;
           this.totalPage = res.data.data.total;
           this.posts = res.data.data;
-          console.log("ResponLop", this.posts);
-          // let data = res.data.data;
-
-          // this.posts = data.sort((a, b) =>
-          //   a.fullname.toString().localeCompare(b.fullname)
-          // );
+          // console.log("ResponLop", this.posts);
+      
         })
         .catch((err) => {
           alert(err);
@@ -382,56 +349,17 @@ export default {
         type: type,
       });
     },
-    // getClassData(currentPage) {
-    //   let url = "http://localhost:8000/api/admin/class/in/grade/getall/" + currentPage;
-    //   get(url)
-    //     .then((res) => {
-    //       // console.log("Respon", res);
-    //       this.perPage = res.data.meta.per_page;
-    //       this.totalPage = res.data.meta.total;
-    //       this.posts = res.data.data;
-    //       //   this.arrTeacher = res.data
-    //       //   console.log(this.arrTeacher.length)
-    //     })
-    //     .catch((err) => {
-    //       alert(err);
-    //     });
-    // },
     handleSelectionChange(val) {
       // this.currentRow = val;
       this.multipleSelection = val;
       if(this.multipleSelection.length >1){
 
       }
-    //     // console.log("Selection",this.multipleSelection)
-    // },
-    // handleDetail(index, row) {
-    //   // console.log(index, row.id);
-    //   this.dialogVisible = true;
-    //   let url = "http://localhost:8000/api/admin/student/" + row.id;
-    //   get(url)
-    //     .then((res) => {
-    //       var user = res.data.data;
-    //       // this.teacher = Object.entries(user).map((e) => ( { [e[0]]: e[1] } ))
-    //       var result = Object.keys(user).map((key) => ({
-    //         key: key,
-    //         name: user[key],
-    //       }));
-    //       console.log("Result",result)
-    //       var temp = result.slice();
-    //       temp.pop();
-    //       var removed = temp.splice(2,1)
-    //       // console.log("Temp",temp)
-    //       this.student = temp;
-
-    //     })
-    //     .catch((err) => {
-    //       alert(err);
-    //     });
-
-      // var arr = Object.keys(user).map((key) => [Number(key), user[key]]);
-      // console.log("arr", arr);
+        // console.log("Selection",this.multipleSelection)
     },
+    handleDetail(index, row) {
+    this.$router.push('/admin/grade/class/'+row.id)
+      },
     handleClose(done) {
       this.$confirm("Are you sure to close this dialog?")
         .then((_) => {
@@ -458,8 +386,6 @@ export default {
           console.log("Respon", res);
           this.dialogDelete = false;
           this.getClassData(this.currentPage);
-          //   this.arrTeacher = res.data
-          //   console.log(this.arrTeacher.length)
         })
         .catch((err) => {
           alert(err);
@@ -468,6 +394,7 @@ export default {
   },
   mounted(currentPage) {
     this.getClassData(currentPage);
+    this.handleDetail(currentPage);
   },
 };
 </script>

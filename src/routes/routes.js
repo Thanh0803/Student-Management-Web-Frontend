@@ -116,16 +116,30 @@ const routes = [
         component: () => import(/* webpackChunkName: "demo" */ '../views/admins/GradeManagement.vue')
       },
       {
+        path: 'subject/:id',
+        name: 'subject',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/admins/TeacherManagement.vue')
+      },
+      {
         path: 'tables',
         name: 'tables',
         component: () => import(/* webpackChunkName: "demo" */ '../views/RegularTables.vue')
-      }
-      
+      },
+      {
+        path: 'student/upload/:id',
+        name: 'UploadStudent',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/admins/UploadExcelStudent.vue')
+      },
       // {
       //   path: 'update',
       //   name: 'update',
       //   component: () => import(/* webpackChunkName: "demo" */ '../views/admins/ImportExcel.vue')
       // }
+      {
+        path: 'grade/class/:id',
+        name: 'class',
+    component: () => import(/* webpackChunkName: "demo" */ '../views/admins/StudentManagement.vue')
+      }
     ]
   },
 

@@ -9,7 +9,7 @@
         <b-col>
           <b-card no-body>
             <b-card-header class="border-0">
-              <h3 class="mb-0">Current Teacher</h3>
+              <h3 class="mb-0">Teacher List</h3>
             </b-card-header>
 
             <el-table
@@ -24,7 +24,7 @@
               <el-table-column
                 label=" Fullname"
                 min-width="150px"
-                prop="fullname"
+                prop="teacher.fullname"
               >
                 <!-- <template v-slot="{row}">
                     <b-media no-body class="align-items-center">
@@ -39,37 +39,15 @@
               </el-table-column>
               <el-table-column
                 label="Telephone Number"
-                prop="phone"
+                prop="teacher.phone"
                 min-width="140px"
               >
               </el-table-column>
-              <!-- <el-table-column label="Email"
-                             prop="email"
-                             min-width="250px">
-            </el-table-column> -->
               <el-table-column
                 label="Gender"
                 min-width="110px"
-                prop="gender"
-              >
-                <template v-slot="{ row }">
-                  <badge
-                    class="badge-dot mr-4"
-                    type=""
-                    v-if="row.gender == 'nam'"
-                  >
-                    <i :class="`bg-info`"></i>
-                    <span class="status" :class="`text-info`">{{
-                      row.gender
-                    }}</span>
-                  </badge>
-                  <badge class="badge-dot mr-4" type="" v-else>
-                    <i :class="`bg-warning`"></i>
-                    <span class="status" :class="`text-warning`">{{
-                      row.gender
-                    }}</span>
-                  </badge>
-                </template>
+                prop="teacher.gender"
+              >    
               </el-table-column>
               <el-table-column label="Action" min-width="290px" align="center">
                 <template slot-scope="scope">
@@ -578,9 +556,7 @@ import {
 //   import projects from '../Tables/projects'
 import projects from "../Tables/projects";
 import users from "../Tables/users";
-//   import LightTable from "../Tables/RegularTables/LightTable";
-//   import DarkTable from "../Tables/RegularTables/DarkTable";
-// import { get } from '../services/services'
+import { mapGetters } from "vuex";
 import { get, put, del, post } from "../../services/services";
 import Vue from "vue";
 Vue.prototype.$confirm = MessageBox.confirm;
@@ -648,17 +624,33 @@ export default {
       multipleSelection: [],
     };
   },
+  created() {
+    // this.fetchData();
+    // this.getClassData()
+  },
+  watch: {
+    keyword(after, before) {
+      this.getResults();
+    },
+    "$route.params.id": function (id) {
+      this.getTeacherData();
+    },    
+  },
+  computed: {
+    ...mapGetters({
+      //map `this.doneCount` to `this.$store.getters.doneTodosCount`
+      user: "user",
+    }),
+  },
   methods: {
     getTeacherData(currentPage) {
-      let url = "http://localhost:8000/api/admin/teacher/getall?page=" + currentPage;
+      let url = "http://localhost:8000/api/admin/teacher/subject/getall/"+this.$route.params.id+"?page=" + this.currentPage;
       get(url)
         .then((res) => {
-          console.log("ResponTeacher", res);
           this.perPage = res.data.meta.per_page;
           this.totalPage = res.data.meta.total;
           this.posts = res.data.data;
-          //   this.arrTeacher = res.data
-          //   console.log(this.arrTeacher.length)
+
         })
         .catch((err) => {
           alert(err);

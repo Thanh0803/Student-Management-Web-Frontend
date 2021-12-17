@@ -99,12 +99,7 @@
         // console.log("selected",selected)
         console.log("username",username)
         console.log("password",password)
-        // if(selected == 0){
-        //     this.$store.dispatch('loginAdmin', { username, password })
-        //       .then(() => this.$router.push('/admin'))
-        //       .catch(err => console.log(err))
-        // }
-        // else if(selected == 1){
+       
         this.$store.dispatch('loginUser', { username, password })
           .then(() => this.$router.push('/'))
           .catch(err => console.log(err))

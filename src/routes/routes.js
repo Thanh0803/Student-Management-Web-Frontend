@@ -139,6 +139,16 @@ const routes = [
         path: 'grade/class/:id',
         name: 'class',
     component: () => import(/* webpackChunkName: "demo" */ '../views/admins/StudentManagement.vue')
+      },
+      {
+        path: 'teacher/upload/:id',
+        name: 'Teacher',
+    component: () => import(/* webpackChunkName: "demo" */ '../views/admins/UploadExcelTeacher.vue')
+      },
+      {
+        path: 'class/upload/:id',
+        name: 'Class',
+    component: () => import(/* webpackChunkName: "demo" */ '../views/admins/ClassManagement.vue')
       }
     ]
   },

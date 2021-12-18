@@ -353,8 +353,7 @@ export default {
     };
   },
   created() {
-    // this.fetchData();
-    // this.getClassData()
+
   },
   watch: {
     keyword(after, before) {
@@ -478,7 +477,7 @@ export default {
       this.dialogDelete = true
       const res = await this.getStudentById(row.id);
       const user = res.data;
-      // console.log(user);
+      console.log("user",user);
       this.studentObj = user.data;
     },
     confirmDelete(){

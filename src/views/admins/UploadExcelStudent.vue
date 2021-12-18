@@ -25,7 +25,7 @@
 
       <!-- 数据展示 -->
       <h1 class="title">{{fileName}}</h1>
-      <el-main v-if="dalen > 1">
+      <el-main v-if="dalen > 0">
         <el-table :data="da" ref="table">
           <!-- <el-table-column prop="code" label="Code"> </el-table-column> -->
           <el-table-column prop="username" label="Username" min-width="100px" align="center"> </el-table-column>
@@ -43,10 +43,10 @@
         </el-table>
       </el-main>
       <div style="text-align: center;">
-      <el-button type="success" @click="handleUpload" v-if="dalen > 1" 
+      <el-button type="success" @click="handleUpload" v-if="dalen > 0" 
         >Hoàn thành</el-button
       >
-      <el-button type="danger" @click="handleRemove" v-if="dalen > 1" 
+      <el-button type="danger" @click="handleRemove" v-if="dalen > 0" 
         >Huỷ</el-button
       >
       </div>

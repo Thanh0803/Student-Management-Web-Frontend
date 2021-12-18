@@ -11,6 +11,12 @@
             <b-card-header class="border-0">
               <h3 class="mb-0">Class List</h3>
             </b-card-header>
+            <el-button 
+              size="mini"
+              type="success"
+              @click="handleImport"
+              class="import-button">
+              Add Class List</el-button>
 
             <el-table
               class="table-responsive table"
@@ -47,7 +53,7 @@
                 <template slot-scope="scope">
                   <el-button
                     size="mini"
-                    type="success"
+                    type="danger"
                     @click="handleDetail(scope.$index, scope.row)"
                     >Student List</el-button
                   >
@@ -313,8 +319,8 @@ export default {
     },
     "$route.params.id": function (id) {
       this.getClassData();
+      this.handleImport();
     },
-    
   },
   computed: {
     ...mapGetters({
@@ -349,6 +355,9 @@ export default {
         type: type,
       });
     },
+    handleImport(){
+      this.$router.push("/admin/class/upload/"+this.$route.params.id);
+    },
     handleSelectionChange(val) {
       // this.currentRow = val;
       this.multipleSelection = val;
@@ -369,18 +378,21 @@ export default {
     },
     async getClassById(id) {
       let url = "http://localhost:8000/api/admin/class/delete/" + id;
+      console.log("XXX", url);
       let json = await get(url);
       return json;
     },
     async handleDelete(index, row) {
       this.dialogDelete = true
       const res = await this.getClassById(row.id);
+      console.log("res",res);
       const user = res.data;
-      // console.log(user);
+      console.log("user",user);
       this.classObj = user.data;
     },
     confirmDelete(){
-      let url = "http://localhost:8000/admin/class/delete/" + this.classObj.id
+      let url = "http://localhost:8000/api/admin/class/delete/" + this.classObj.id
+      console.log("url", url);
       del(url)
         .then((res) => {
           console.log("Respon", res);

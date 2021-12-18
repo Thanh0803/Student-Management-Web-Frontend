@@ -11,6 +11,12 @@
             <b-card-header class="border-0">
               <h3 class="mb-0">Teacher List</h3>
             </b-card-header>
+            <el-button 
+              size="mini"
+              type="success"
+              @click="handleImport"
+              class="import-button">
+              Add Teacher List</el-button>
 
             <el-table
               class="table-responsive table"
@@ -53,12 +59,13 @@
                 <template slot-scope="scope">
                   <el-button
                     size="mini"
-                    type="success"
+                    type="danger"
                     @click="handleDetail(scope.$index, scope.row)"
                     >Detail</el-button
                   >
                   <el-button
                     size="mini"
+                    type="danger"
                     @click="handleEdit(scope.$index, scope.row)"
                     >Edit</el-button
                   >
@@ -625,8 +632,6 @@ export default {
     };
   },
   created() {
-    // this.fetchData();
-    // this.getClassData()
   },
   watch: {
     keyword(after, before) {
@@ -634,6 +639,7 @@ export default {
     },
     "$route.params.id": function (id) {
       this.getTeacherData();
+      this.handleImport();
     },    
   },
   computed: {
@@ -645,11 +651,13 @@ export default {
   methods: {
     getTeacherData(currentPage) {
       let url = "http://localhost:8000/api/admin/teacher/subject/getall/"+this.$route.params.id+"?page=" + this.currentPage;
+      console.log("URL",url)
       get(url)
         .then((res) => {
           this.perPage = res.data.meta.per_page;
           this.totalPage = res.data.meta.total;
           this.posts = res.data.data;
+          console.log("XXX",this.posts)
 
         })
         .catch((err) => {
@@ -703,6 +711,9 @@ export default {
 
       // var arr = Object.keys(user).map((key) => [Number(key), user[key]]);
       // console.log("arr", arr);
+    },
+    handleImport(){
+      this.$router.push("/admin/teacher/upload/"+this.$route.params.id);
     },
     async handleEdit(index, row) {
       this.dialogEdit = true;

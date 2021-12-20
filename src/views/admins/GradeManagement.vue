@@ -14,7 +14,7 @@
             <el-button 
               size="mini"
               type="success"
-              @click="handleImport"
+              @click="handleAdd()"
               class="import-button">
               Add Class List</el-button>
 
@@ -45,10 +45,7 @@
                 min-width="140px"
               >
               </el-table-column>
-              <!-- <el-table-column label="Email"
-                             prop="email"
-                             min-width="250px">
-            </el-table-column> -->
+  
               <el-table-column label="Action" min-width="290px" align="center">
                 <template slot-scope="scope">
                   <el-button
@@ -98,128 +95,74 @@
           </b-card>
         </b-col>
       </b-row>
-  
-      <el-dialog
-        title="Chinh sua thong tin Lop hoc"
-        :visible.sync="dialogEdit" 
-        :before-close="handleClose"
-        width="70%"
-      >
-        <el-form ref="form" :model="form" label-width="120px">
-          <el-form-item label="ClassName">
-            <el-input
-              v-model="form.className"
-              :placeholder="classObj.className"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="HeadTeacher">
-            <el-input
-              v-model="form.headTeacher"
-              :placeholder="classObj.headTeacher"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="schoolYear">
-            <el-input
-              v-model="form.schoolYear"
-              :placeholder="classObj.schoolYear"
-            ></el-input>
-          </el-form-item>
-          <!-- <el-form-item label="Activity zone">
-            <el-select
-              v-model="form.region"
-              placeholder="please select your zone"
-            >
-              <el-option label="Zone one" value="shanghai"></el-option>
-              <el-option label="Zone two" value="beijing"></el-option>
-            </el-select>
-          </el-form-item> -->
-          <!-- <el-form-item label="Activity time">
-            <el-col :span="11">
-              <el-date-picker
-                type="date"
-                placeholder="Pick a date"
-                v-model="form.date1"
-                style="width: 100%"
-              ></el-date-picker>
-            </el-col>
-            <el-col class="line" :span="2">-</el-col>
-            <el-col :span="11">
-              <el-time-picker
-                placeholder="Pick a time"
-                v-model="form.date2"
-                style="width: 100%"
-              ></el-time-picker>
-            </el-col>
-          </el-form-item>
-          <el-form-item label="Instant delivery">
-            <el-switch v-model="form.delivery"></el-switch>
-          </el-form-item>
-          <el-form-item label="Activity type">
-            <el-checkbox-group v-model="form.type">
-              <el-checkbox label="Online activities" name="type"></el-checkbox>
-              <el-checkbox
-                label="Promotion activities"
-                name="type"
-              ></el-checkbox>
-              <el-checkbox label="Offline activities" name="type"></el-checkbox>
-              <el-checkbox
-                label="Simple brand exposure"
-                name="type"
-              ></el-checkbox>
-            </el-checkbox-group>
-          </el-form-item>
-          <el-form-item label="Resources">
-            <el-radio-group v-model="form.resource">
-              <el-radio label="Sponsor"></el-radio>
-              <el-radio label="Venue"></el-radio>
-            </el-radio-group>
-          </el-form-item>
-          <el-form-item label="Activity form">
-            <el-input type="textarea" v-model="form.desc"></el-input>
-          </el-form-item> -->
-          <!-- <el-form-item>
-            <el-button type="primary" @click="onSubmitEdit">Update</el-button>
-            <el-button @click="dialogEdit = false">Cancel</el-button>
-          </el-form-item> -->
-        </el-form>
-        <!-- <span slot="footer" class="dialog-footer">
-          <el-button @click="dialogVisible = false">Cancel</el-button>
-          <el-button type="primary" @click="dialogEdit = false"
-            >Confirm</el-button
-          >
-        </span> -->
-      </el-dialog>
-      <el-dialog
+      <div>
+        <el-dialog
         title="Warning"
         :visible.sync="dialogDelete"
         width="30%"
         center
       >
-        <span
-          >Bạn có muốn xoá người này</span
-        >
+        <h3 class="text-center"
+          >Bạn có muốn Xoá lớp này </h3>
+          <h4 class="text-center red" >(Toàn bộ học sinh trong lớp sẽ bị xoá)</h4>
         <span slot="footer" class="dialog-footer">
           <el-button type="primary" @click="confirmDelete">Confirm</el-button>
           <el-button  @click="dialogDelete = false"
             >Cancle</el-button
           >
         </span>
-      </el-dialog>
-      <el-dialog
-        title="Warning"
-        :visible.sync="dialogMultiDelete"
-        width="30%"
-        center
-      >
-        <!-- <span
-          >Bạn có muốn xoá những người này</span>
-        <span slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="confirmMultiDelete">Confirm</el-button>
-          <el-button  @click="dialogMultiDelete = false"
-            >Cancle</el-button
-          >
-        </span> -->
-      </el-dialog>
+        </el-dialog>
+        <b-modal ref="modalAdd" size="xl" title="Thêm lớp học"
+        id="modal-add"
+        @show="resetModal"
+        @hidden="resetModal"
+        @ok="handleAddClass">
+          <el-form ref="form" :model="form" :rules="rules" label-width="120px" @submit.stop.prevent="handleSubmitAdd">
+            <b-container class="bv-example-row">
+              <b-row>
+                <b-col>
+                  <el-form-item label="ClassName" prop="className">
+                    <el-input
+                      v-model="form.className"
+                    ></el-input>
+                  </el-form-item>
+                  <el-form-item label="HeadTeacher" prop="headTeacher">
+                    <el-select
+                      v-model="form.teacher_id"
+                      clearable
+                      filterable
+                      
+                    >
+                      <el-option
+                        v-for="item in options"
+                        :key="item.id"
+                        :label="item.fullname"
+                        :value="item.id"
+                      >
+                      </el-option>
+                    </el-select>
+                  </el-form-item>
+                </b-col>
+                <b-col>
+                  <el-form-item label="SchoolYear" prop="schoolYear">
+                    <el-input
+                      v-model="form.schoolYear"
+                      
+                    ></el-input>
+                  </el-form-item>
+                  <el-form-item label="AcademicYear" prop="academicYear">
+                    <el-input
+                      v-model="form.academicYear"
+                      
+                    ></el-input>
+                  </el-form-item>
+                </b-col>
+              </b-row>
+            </b-container>
+          </el-form>
+        </b-modal>
+
+      </div>
     </b-container>
   </div>
 </template>
@@ -248,16 +191,14 @@ import {
   Radio,
   RadioGroup,
 } from "element-ui";
-//   import projects from '../Tables/projects'
 import projects from "../Tables/projects";
-import users from "../Tables/users";
-//   import LightTable from "../Tables/RegularTables/LightTable";
-//   import DarkTable from "../Tables/RegularTables/DarkTable";
-// import { get } from '../services/services'
 import { get, put,del, post } from "../../services/services";
 import Vue from "vue";
+import Vuelidate from 'vuelidate';
+Vue.use(Vuelidate);
 import { mapGetters } from "vuex";
 Vue.prototype.$confirm = MessageBox.confirm;
+
 export default {
   components: {
     //   LightTable,
@@ -301,17 +242,36 @@ export default {
       dialogMultiDelete: false,
       student: [],
       form: {
-        className: "className",
-        headTeacher: "headTeacher",
-        schoolYear: "schoolYear",
+        className: "",
+        schoolYear: "",
+        academicYear: "",
+        teacher_id: "",
       },
       classObj: {},
       multipleSelection: [],
+      keyTeacherId: [],
+      options: [],
+      keyTeacherName: "",
+      rules: {
+          className: [
+            { required: true, message: 'Nhập đủ tên lớp', trigger: 'blur' },
+            // { min: 3, max: 5, message: 'Length should be 3 to 5', trigger: 'blur' }
+          ],
+          teacher_id : [
+            { required: true, message: 'Nhập đủ GVCN', trigger: 'change' }
+          ],
+          schoolYear: [
+            { required: true, message: 'Nhập đủ tên trường', trigger: 'blur' },
+            // { min: 3, max: 5, message: 'Length should be 3 to 5', trigger: 'blur' }
+          ],
+          academicYear : [
+            { required: true, message: 'Nhập đủ khối', trigger: 'change' }
+          ],
+  
+        }
     };
   },
   created() {
-    // this.fetchData();
-    // this.getClassData()
   },
   watch: {
     keyword(after, before) {
@@ -319,7 +279,8 @@ export default {
     },
     "$route.params.id": function (id) {
       this.getClassData();
-      this.handleImport();
+      this.getKeyTeacher();
+      this.handleSubmitAdd();
     },
   },
   computed: {
@@ -328,6 +289,7 @@ export default {
       user: "user",
     }),
   },
+  
   methods: {
     getClassData(currentPage) {
       let url =
@@ -339,7 +301,7 @@ export default {
           this.perPage = res.data.data.per_page;
           this.totalPage = res.data.data.total;
           this.posts = res.data.data;
-          // console.log("ResponLop", this.posts);
+
       
         })
         .catch((err) => {
@@ -355,9 +317,79 @@ export default {
         type: type,
       });
     },
-    handleImport(){
-      this.$router.push("/admin/class/upload/"+this.$route.params.id);
+    handleAdd(){
+        this.$refs["modalAdd"].show();
+        this.getKeyTeacher();
     },
+    handleAddClass(bvModalEvt){
+        bvModalEvt.preventDefault()
+        // Trigger submit handler
+        this.handleSubmitAdd()
+    },
+    handleSubmitAdd(){
+        this.$refs["form"].validate((valid) => {
+          if (valid) {
+            let url = "http://localhost:8000/api/admin/class/upload/"+ this.$route.params.id;
+            let payload = this.form;
+            console.log("payload",this.form)
+            post(url,payload)
+            .then((res) => {
+              console.log("Respon", res);
+              this.showNotification("success","Đã thêm thành công")
+              this.getClassData(this.currentPage);
+              //   this.arrTeacher = res.data
+              //   console.log(this.arrTeacher.length)
+            //   this.getStudentData(this.currentPage);
+          
+        })
+        .catch((err) => {
+          // alert(err);
+          this.showNotification("danger",err)
+        });
+            this.$nextTick(() => {
+          this.$bvModal.hide('modal-add')
+        })
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+        
+    },
+    getKeyTeacher() {
+      let url = "http://localhost:8000/api/admin/teacher/getall/";
+      get(url)
+        .then((res) => {
+          let keyFillter = []
+          // console.log("res",res)
+          let arr = Object.keys(res.data.data).map((k) => res.data.data[k])
+          // console.log("After",arr)
+          arr.forEach((element)=>{
+                if(this.keyTeacherId.includes(element.id)){
+                  // console.log("ko ddung", element)
+                }
+                else{
+                  keyFillter.push(element)
+                  // console.log("ddung", element)
+                }
+           })
+          //  console.log(keyFillter)
+          this.options = keyFillter;
+          //   console.log(this.options)
+          //   this.keyTeacher = res.data.User.data.fullname
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    },
+    resetModal() {
+        this.form.className = ''
+        this.form.schoolYear = ''
+        this.form.academicYear = ''
+        this.options = []
+        // this.form.key_teacher = null
+        this.form.teacher_id = null
+      },
     handleSelectionChange(val) {
       // this.currentRow = val;
       this.multipleSelection = val;
@@ -378,7 +410,6 @@ export default {
     },
     async getClassById(id) {
       let url = "http://localhost:8000/api/admin/class/delete/" + id;
-      console.log("XXX", url);
       let json = await get(url);
       return json;
     },
@@ -392,7 +423,6 @@ export default {
     },
     confirmDelete(){
       let url = "http://localhost:8000/api/admin/class/delete/" + this.classObj.id
-      console.log("url", url);
       del(url)
         .then((res) => {
           console.log("Respon", res);
@@ -406,8 +436,7 @@ export default {
   },
   mounted(currentPage) {
     this.getClassData(currentPage);
-    this.handleDetail(currentPage);
-  },
+      },
 };
 </script>
 <style>

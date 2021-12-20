@@ -807,6 +807,13 @@
   resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.2.tgz#690a1475b84f2a884fd07cd797c00f5f31356ea8"
   integrity sha512-ce5d3q03Ex0sy4R14722Rmt6MT07Ua+k4FwDfdcToYJcMKNtRVQvJ6JCAPdAmAnbRb6CsX6aYb9m96NGod9uTw==
 
+"@types/vuelidate@^0.7.15":
+  version "0.7.15"
+  resolved "https://registry.yarnpkg.com/@types/vuelidate/-/vuelidate-0.7.15.tgz#f88b1d89081ea8e54d33ca83ead034a9619b2eb4"
+  integrity sha512-U3uabs0vVuRmxx4+cwa5Hhq1edxWuMODEf/u98PQ4+EJtZCs4TZep9q6zrGuqWmVImUc2DlKD33kXmSZqakV/A==
+  dependencies:
+    vue "^2.6.11"
+
 "@vue/babel-helper-vue-jsx-merge-props@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@vue/babel-helper-vue-jsx-merge-props/-/babel-helper-vue-jsx-merge-props-1.0.0.tgz#048fe579958da408fb7a8b2a3ec050b50a661040"
@@ -8989,10 +8996,10 @@ vary@~1.1.2:
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
 
-vee-validate@^3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-3.2.1.tgz#053ab09fe6676a00f8c1a0c428d88c0acccde7ec"
-  integrity sha512-3mjHo/BQnLxsc1eW3LBrVNACXBiGK/hPbQQTpxoONRdRdCqYREjX4JdZk83ArbtrIXs/bvkakOiOYKR9i0F7mg==
+vee-validate@^3.4.14:
+  version "3.4.14"
+  resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-3.4.14.tgz#51f91c01d6660c43c6252c417c89fb07cdf8b8dd"
+  integrity sha512-Hqqic8G9WcRSIzCxiCPqMZv4qB8JE1lIQqIOLDm2K5BXUiL8d4a2+kqkanv8gQSGDzYpnCQZ7BO/T99Aj05T1Q==
 
 vendors@^1.0.0:
   version "1.0.3"
@@ -9105,6 +9112,11 @@ vue@^2.6.11:
   version "2.6.11"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
   integrity sha512-VfPwgcGABbGAue9+sfrD4PuwFar7gPb1yl1UK1MwXoQPAw0BKSqWfoYCT/ThFrdEVWoI51dBuyCoiNU9bZDZxQ==
+
+vuelidate@^0.7.7:
+  version "0.7.7"
+  resolved "https://registry.yarnpkg.com/vuelidate/-/vuelidate-0.7.7.tgz#5df3930a63ddecf56fde7bdacea9dbaf0c9bf899"
+  integrity sha512-pT/U2lDI67wkIqI4tum7cMSIfGcAMfB+Phtqh2ttdXURwvHRBJEAQ0tVbUsW9Upg83Q5QH59bnCoXI7A9JDGnA==
 
 vuex-persistedstate@^4.0.0-beta.3:
   version "4.1.0"

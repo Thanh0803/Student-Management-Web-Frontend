@@ -192,7 +192,6 @@ export default {
             obj.motherCareer = v["MotherCareer"];
             nameTemp = obj.email.split('@');
             var birthdayTemp = v["Birthday"];
-            console.log("XXX", birthdayTemp)
             var birthdayArray = birthdayTemp.split("/");
             var birthday = new Date(birthdayArray[2],birthdayArray[1],birthdayArray[0])
             obj.birthdayYear = parseInt(birthdayArray[2]);
@@ -224,7 +223,6 @@ export default {
         data: [],
       };
       payload.data = this.da;
-      console.log('payload',payload.data);
       post(url, payload)
         .then((res) => {
           console.log("Respon", res);

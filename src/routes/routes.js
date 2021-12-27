@@ -130,11 +130,11 @@ const routes = [
         name: 'UploadStudent',
         component: () => import(/* webpackChunkName: "demo" */ '../views/admins/UploadExcelStudent.vue')
       },
-      // {
-      //   path: 'update',
-      //   name: 'update',
-      //   component: () => import(/* webpackChunkName: "demo" */ '../views/admins/ImportExcel.vue')
-      // }
+      {
+        path: 'assign/teacher',
+        name: 'assign',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/admins/TeacherAssignment.vue')
+      },
       {
         path: 'grade/class/:id',
         name: 'class',
@@ -148,8 +148,8 @@ const routes = [
       {
         path: 'class/upload/:id',
         name: 'Class',
-    component: () => import(/* webpackChunkName: "demo" */ '../views/admins/ClassManagement.vue')
-      }
+    component: () => import(/* webpackChunkName: "demo" */ '../views/admins/GradeManagement.vue')
+      },
     ]
   },
 
@@ -194,6 +194,16 @@ const routes = [
         path: "home",
         name: "SecureTeacher",
         component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Teacher/Secure.vue')
+      },
+      {
+        path: "class/subject/:id",
+        name: "Mark Information",
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Teacher/MarkManagement.vue')
+      },
+      {
+        path: "class/:id",
+        name: "Mark Information",
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Teacher/ConductManagement.vue')
       }
   
     ]

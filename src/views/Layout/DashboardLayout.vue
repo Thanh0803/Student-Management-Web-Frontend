@@ -64,20 +64,42 @@
               }"
           ></sidebar-item> 
           </sidebar-item>
-        <sidebar-item v-if="role == 0"
+        <sidebar-item v-if="role == 1"
                   :link="{
                     name: 'Test and Mark Management',
                     path: '/admin/test&mark',
                     icon: 'ni ni-key-25 text-info'
                   }"
-        ></sidebar-item>
-        <sidebar-item v-if="role == 0"
+        >
+          <sidebar-item
+            v-for="(item, index) in AssignObj"
+              :item="item"
+              :index="index"
+              :key="item.id"
+              :link="{
+                name: item.subjectName + ' - ' + item.className ,
+                path: '/teacher/class/subject/' + item.id,
+              }"
+          ></sidebar-item>
+        </sidebar-item>
+        <sidebar-item v-if="role == 1"
                   :link="{
                     name: 'Conduct Management',
                     path: '/admin/conduct',
                     icon: 'ni ni-key-25 text-info'
                   }"
-        ></sidebar-item>
+        >
+           <sidebar-item
+            v-for="(item, index) in ClassObj"
+              :item="item"
+              :index="index"
+              :key="item.id"
+              :link="{
+                name: item.className ,
+                path: '/teacher/class/' + item.id,
+              }"
+          ></sidebar-item>
+        </sidebar-item>
         <sidebar-item v-if="role == 0"
                   :link="{
                     name: 'Teacher Assignment',
@@ -145,6 +167,8 @@ export default {
     return {
       gradeObj: [],
       subjectObj:[],
+      AssignObj:[],
+      ClassObj:[],
     };
   },
     methods: {
@@ -177,13 +201,45 @@ export default {
             alert(err);
           });
         }
-      }
+      },
+      fetchAssignData() {
+      if (this.$store.getters.role == 1) {
+        
+        let url ="http://localhost:8000/api/teacher/class/subject/getall/"+this.$store.getters.user.id ;
+        get(url)
+          .then((res) => {
+            this.AssignObj = res.data.data;
+            // console.log("assign",this.AssignObj)
+          })
+          .catch((err) => {
+            alert(err);
+          });
+        }
+      },
+      fetchClassData() {
+      if (this.$store.getters.role == 1) {
+        
+        let url = "http://localhost:8000/api/head/teacher/class/"+this.$store.getters.user.id ;
+        // console.log("URL",url)
+        get(url)
+          .then((res) => {
+            this.ClassObj = res.data.data;
+            // console.log("class",res)
+          })
+          .catch((err) => {
+            alert(err);
+          });
+        }
+      },
     },
+
     
     mounted() {
       this.initScrollbar()
       this.fetchGradeData()
       this.fetchSubjectData()
+      this.fetchAssignData()
+      this.fetchClassData()
     }
   };
 </script>

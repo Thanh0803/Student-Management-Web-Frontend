@@ -33,45 +33,13 @@ export default new Vuex.Store({
       },
   },
   actions: {
-    // loginAdmin({commit}, user){
-    //     return new Promise((resolve, reject) => {
-    //       commit('auth_request')
-    //       axios({url: 'http://localhost:8000/api/admin/login', data: user, method: 'POST' })
-    //       .then(resp => {
-    //           if(resp.data.status_code!=200){
-    //             commit('auth_error')
-    //             localStorage.removeItem('token')
-    //             // console.log("err",err);
-    //             console.log("err",resp);
-    //             reject(resp.data.message)
-    //           }
-    //           else{
-    //         const token = resp.data.data.access_token
-    //         const user = resp.data.data.user
-    //         const role = resp.data.data.role
-    //         console.log("user",user)
-    //         localStorage.setItem('token', token)
-    //         localStorage.setItem('role', role)
-    //         axios.defaults.headers.common['Authorization'] = "Bearer " + token
-    //         commit('auth_success', {token, user, role})
-    //         resolve(resp)
-    //         console.log("response",resp)
-    //           }
-    //       })
-    //       .catch(
-            
-    //       )
-
-    //     })
-    // },
-    
     loginUser({commit}, user){
         return new Promise((resolve, reject) => {
           commit('auth_request')
           axios({url: 'http://localhost:8000/api/system/login', data: user, method: 'POST' })
           .then(resp => {
               if(resp.data.status_code!=200){
-                console.log("response", resp)
+                // console.log("response", resp)
                 commit('auth_error')
                 localStorage.removeItem('token')
                 console.log("err",err);
@@ -82,9 +50,10 @@ export default new Vuex.Store({
             const token = resp.data.data.access_token
             const user = resp.data.data.user
             const role = resp.data.data.role
-            console.log("user",user)
+            // console.log("user",user)
             localStorage.setItem('token', token)
             localStorage.setItem('role', role)
+            localStorage.setItem('user',user.id)
             axios.defaults.headers.common['Authorization'] = token
             axios.defaults.headers.common['Authorization'] = "Bearer " + token
             commit('auth_success', {token, user, role})

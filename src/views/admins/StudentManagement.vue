@@ -220,12 +220,6 @@
             <el-button @click="dialogEdit = false">Cancel</el-button>
           </el-form-item>
         </el-form>
-        <!-- <span slot="footer" class="dialog-footer">
-          <el-button @click="dialogVisible = false">Cancel</el-button>
-          <el-button type="primary" @click="dialogEdit = false"
-            >Confirm</el-button
-          >
-        </span> -->
       </el-dialog>
       <el-dialog
         title="Warning"
@@ -432,8 +426,9 @@ export default {
 
       const res = await this.getStudentById(row.id);
       const user = res.data;
-      // console.log(user);
+      // console.log("AAAAAA",user);
       this.studentObj = user.data;
+      console.log("studentobj",this.studentObj)
       this.form.gender = user.data.gender;
       //   .then(function(result) {
       //     // console.log("json",result)
@@ -477,14 +472,14 @@ export default {
       this.dialogDelete = true
       const res = await this.getStudentById(row.id);
       const user = res.data;
-      console.log("user",user);
+      // console.log("user",user);
       this.studentObj = user.data;
     },
     confirmDelete(){
       let url = "http://localhost:8000/api/admin/student/" + this.studentObj.id
       del(url)
         .then((res) => {
-          console.log("Respon", res);
+          // console.log("Respon", res);
           this.dialogDelete = false;
           this.getStudentData(this.currentPage);
           //   this.arrTeacher = res.data

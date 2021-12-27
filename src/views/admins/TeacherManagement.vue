@@ -599,13 +599,13 @@ export default {
   methods: {
     getTeacherData(currentPage) {
       let url = "http://localhost:8000/api/admin/teacher/subject/getall/"+this.$route.params.id+"?page=" + this.currentPage;
-      console.log("URL",url)
+      // console.log("URL",url)
       get(url)
         .then((res) => {
           this.perPage = res.data.meta.per_page;
           this.totalPage = res.data.meta.total;
           this.posts = res.data.data;
-          console.log("XXX",this.posts)
+          // console.log("XXX",this.posts)
 
         })
         .catch((err) => {
@@ -670,7 +670,7 @@ export default {
       const user = res.data;
       // console.log("user", user);
       this.teacherObj = user.data;
-      console.log("Teacher", this.teacherObj);
+      // console.log("Teacher", this.teacherObj);
       this.form.gender = user.data.gender;
       //   .then(function(result) {
       //     // console.log("json",result)
@@ -697,6 +697,7 @@ export default {
       // console.log("Form",this.form);
       let url = "http://localhost:8000/api/admin/teacher/update/" + this.teacherObj.id;
       let payload = this.form;
+      console.log("payload teacher", payload)
       put(url, payload)
         .then((res) => {
           // console.log("Respon", res);
@@ -720,7 +721,7 @@ export default {
       let url = "http://localhost:8000/api/admin/teacher/" + this.teacherObj.id;
       del(url)
         .then((res) => {
-          console.log("Respon", res);
+          // console.log("Respon", res);
           this.dialogDelete = false;
           this.getTeacherData(this.currentPage);
           //   this.arrTeacher = res.data
@@ -757,7 +758,7 @@ export default {
       // console.log("payload",payload);
       post(url, payload)
         .then((res) => {
-          console.log("Respon", res);
+          // console.log("Respon", res);
           this.dialogMultiDelete = false;
           // this.getStudentData(this.currentPage);
           //   this.arrTeacher = res.data
@@ -768,13 +769,13 @@ export default {
           alert(err);
         });
     },
-    async handleAddLevel(index, row) {
-      this.dialogAddLevel = true;
-      const res = await this.getTeacherById(row.id);
-      const user = res.data;
-      console.log(user);
-      this.teacherObj = user.data;
-    },
+    // async handleAddLevel(index, row) {
+    //   this.dialogAddLevel = true;
+    //   const res = await this.getTeacherById(row.id);
+    //   const user = res.data;
+    //   console.log(user);
+    //   this.teacherObj = user.data;
+    // },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -800,7 +801,7 @@ export default {
           // console.log
           put(url, payload)
             .then((res) => {
-              console.log("Respon", res);
+              // console.log("Respon", res);
               this.dialogAddLevel = false;
               this.getTeacherData(this.currentPage);
               this.$refs[formName].resetFields();
@@ -867,7 +868,7 @@ export default {
       // console.log
       put(url, payload)
         .then((res) => {
-          console.log("Respon", res);
+          // console.log("Respon", res);
           this.dialogUpdateLevel = false;
           this.getTeacherData(this.currentPage);
           this.$refs[formName].resetFields();

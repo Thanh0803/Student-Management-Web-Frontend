@@ -97,8 +97,8 @@
         let password = this.model.password
         // let selected = this.selected
         // console.log("selected",selected)
-        console.log("username",username)
-        console.log("password",password)
+        // console.log("username",username)
+        // console.log("password",password)
        
         this.$store.dispatch('loginUser', { username, password })
           .then(() => this.$router.push('/'))

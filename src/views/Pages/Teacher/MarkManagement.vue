@@ -290,10 +290,8 @@ export default {
       put(url, payload)
         .then((res) => {
           // console.log("Respon", res);
-          // this.dialogEdit = false;
-          // this.getMarkData(this.currentPage);
-          //   this.arrTeacher = res.data
-          //   console.log(this.arrTeacher.length)
+          this.dialogEdit = false;
+          this.getMarkData(this.currentPage);
         })
         .catch((err) => {
           alert(err);

@@ -418,8 +418,6 @@ export default {
           alert(err);
         });
 
-      // var arr = Object.keys(user).map((key) => [Number(key), user[key]]);
-      // console.log("arr", arr);
     },
     async handleEdit(index, row) {
       this.dialogEdit = true;
@@ -430,14 +428,7 @@ export default {
       this.studentObj = user.data;
       console.log("studentobj",this.studentObj)
       this.form.gender = user.data.gender;
-      //   .then(function(result) {
-      //     // console.log("json",result)
-      //     var user = result.data.data
-      //     console.log("user",user)
-      //     this.teacher = user
-      //     console.log("teacher",result)
-
-      // })
+   
     },
     handleClose(done) {
       this.$confirm("Are you sure to close this dialog?")
@@ -446,11 +437,7 @@ export default {
         })
         .catch((_) => {});
     },
-    async getStudentById(id) {
-      let url = "http://localhost:8000/api/admin/student/" + id;
-      let json = await get(url);
-      return json;
-    },
+
     onSubmitEdit() {
       // console.log("Form",this.form);
       let url = "http://localhost:8000/api/admin/student/update/" + this.studentObj.id;
@@ -468,12 +455,18 @@ export default {
           alert(err);
         });
     },
+    async getStudentById(id) {
+    let url = "http://localhost:8000/api/admin/student/" + id;
+    let json = await get(url);
+    return json;
+    },
     async handleDelete(index, row) {
+      // console.log("row",row);
       this.dialogDelete = true
       const res = await this.getStudentById(row.id);
       const user = res.data;
-      // console.log("user",user);
-      this.studentObj = user.data;
+      this.studentObj = row;
+      console.log("studentObj",this.studentObj);
     },
     confirmDelete(){
       let url = "http://localhost:8000/api/admin/student/" + this.studentObj.id

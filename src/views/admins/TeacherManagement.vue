@@ -303,36 +303,7 @@
           :model="formLevel"
           label-width="170px"
         >
-          <!-- <el-form-item label="Họ và tên">
-            <el-input
-              v-model="form.fullname"
-              :placeholder="teacherObj.fullname"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="Tên">
-            <el-input
-              v-model="form.name"
-              :placeholder="teacherObj.name"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="Số điện thoại">
-            <el-input
-              v-model="form.phone"
-              :placeholder="teacherObj.phone"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="Email">
-            <el-input
-              v-model="form.email"
-              :placeholder="teacherObj.email"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="Giới tính">
-            <el-radio-group v-model="form.gender">
-              <el-radio label="nam"></el-radio>
-              <el-radio label="nữ"></el-radio>
-            </el-radio-group>
-          </el-form-item> -->
+        
           <el-form-item
             label="Trình độ tốt nghiệp"
             prop="level"
@@ -355,27 +326,7 @@
               <el-option label="Sơ cấp" value="Sơ cấp"></el-option>
             </el-select>
           </el-form-item>
-          <!-- <el-form-item label="Activity time">
-            <el-col :span="11">
-              <el-date-picker
-                type="date"
-                placeholder="Pick a date"
-                v-model="form.date1"
-                style="width: 100%"
-              ></el-date-picker>
-            </el-col>
-            <el-col class="line" :span="2">-</el-col>
-            <el-col :span="11">
-              <el-time-picker
-                placeholder="Pick a time"
-                v-model="form.date2"
-                style="width: 100%"
-              ></el-time-picker>
-            </el-col>
-          </el-form-item>
-          <el-form-item label="Instant delivery">
-            <el-switch v-model="form.delivery"></el-switch>
-          </el-form-item>-->
+         
           <el-form-item
             label="Mon hoc"
             prop="subject"
@@ -398,15 +349,6 @@
               <el-checkbox label="GDCD" name="subject"></el-checkbox>
             </el-checkbox-group>
           </el-form-item>
-          <!--<el-form-item label="Resources">
-            <el-radio-group v-model="form.resource">
-              <el-radio label="Sponsor"></el-radio>
-              <el-radio label="Venue"></el-radio>
-            </el-radio-group>
-          </el-form-item>
-          <el-form-item label="Activity form">
-            <el-input type="textarea" v-model="form.desc"></el-input>
-          </el-form-item> -->
           <el-form-item label="Khả năng chủ nhiệm">
             <el-radio-group v-model="formLevel.canBeKeyTeacher">
               <el-radio label="Có" value="Yes"></el-radio>
@@ -441,28 +383,6 @@
           :model="formLevel"
           label-width="170px"
         >
-          <el-form-item label="Trình độ tốt nghiệp" prop="level">
-            <el-select v-model="formLevel.level" :placeholder="levelObj.level">
-              <el-option label="Tiến sỹ" value="Tiến sỹ"></el-option>
-              <el-option label="Thạc sỹ" value="Thạc sỹ"></el-option>
-              <el-option label="Đại Học" value="Đại học"></el-option>
-              <el-option label="Cao Đẳng" value="Cao đẳng"></el-option>
-              <el-option label="Sơ cấp" value="Sơ cấp"></el-option>
-            </el-select>
-          </el-form-item>
-
-          <el-form-item label="Mon hoc" prop="subject">
-            <el-checkbox-group v-model="formLevel.subject">
-              <el-checkbox label="Toan" name="subject"></el-checkbox>
-              <el-checkbox label="Ngu Van" name="subject"></el-checkbox>
-              <el-checkbox label="Ngoai ngu" name="subject"></el-checkbox>
-              <el-checkbox label="Vat Ly" name="subject"></el-checkbox>
-              <el-checkbox label="Hoa hoc" name="subject"></el-checkbox>
-              <el-checkbox label="Lich su" name="subject"></el-checkbox>
-              <el-checkbox label="Dia ly" name="subject"></el-checkbox>
-              <el-checkbox label="GDCD" name="subject"></el-checkbox>
-            </el-checkbox-group>
-          </el-form-item>
 
           <el-form-item label="Khả năng chủ nhiệm">
             <el-radio-group v-model="formLevel.canBeKeyTeacher">
@@ -665,21 +585,14 @@ export default {
     },
     async handleEdit(index, row) {
       this.dialogEdit = true;
-
+      console.log("row",row)
       const res = await this.getTeacherById(row.id);
       const user = res.data;
       // console.log("user", user);
       this.teacherObj = user.data;
-      // console.log("Teacher", this.teacherObj);
+      console.log("Teacher", this.teacherObj);
       this.form.gender = user.data.gender;
-      //   .then(function(result) {
-      //     // console.log("json",result)
-      //     var user = result.data.data
-      //     console.log("user",user)
-      //     this.teacher = user
-      //     console.log("teacher",result)
-
-      // })
+  
     },
     handleClose(done) {
       this.$confirm("Are you sure to close this dialog?")
@@ -690,6 +603,7 @@ export default {
     },
     async getTeacherById(id) {
       let url = "http://localhost:8000/api/admin/teacher/" + id;
+      console.log("url", url)
       let json = await get(url);
       return json;
     },
@@ -700,32 +614,33 @@ export default {
       console.log("payload teacher", payload)
       put(url, payload)
         .then((res) => {
-          // console.log("Respon", res);
+
           this.dialogEdit = false;
           this.getTeacherData(this.currentPage);
-          //   this.arrTeacher = res.data
-          //   console.log(this.arrTeacher.length)
+  
         })
         .catch((err) => {
           alert(err);
         });
     },
     async handleDelete(index, row) {
+
       this.dialogDelete = true;
       const res = await this.getTeacherById(row.id);
       const user = res.data;
-      // console.log(user);
+      this.levelObj = row;
+      console.log("row", row);
       this.teacherObj = user.data;
+      console.log("this.teacherObj",this.teacherObj);
     },
     confirmDelete() {
-      let url = "http://localhost:8000/api/admin/teacher/" + this.teacherObj.id;
+      let url = "http://localhost:8000/api/admin/teacher/" + this.levelObj.id;
       del(url)
         .then((res) => {
           // console.log("Respon", res);
           this.dialogDelete = false;
           this.getTeacherData(this.currentPage);
-          //   this.arrTeacher = res.data
-          //   console.log(this.arrTeacher.length)
+          
         })
         .catch((err) => {
           alert(err);
@@ -736,7 +651,6 @@ export default {
       this.multipleSelection = val;
       if (this.multipleSelection.length > 1) {
       }
-      // console.log("Selection",this.multipleSelection)
     },
     confirmMultiDelete() {
       let url = "http://localhost:8000/api/teacher/delete";
@@ -751,11 +665,7 @@ export default {
         }
         // payload.ids
       });
-      // payload.ids.forEach(function(item, index, array) {
-      //     console.log(item, index);
-      //     // payload.ids.push(item.id)
-      // });
-      // console.log("payload",payload);
+
       post(url, payload)
         .then((res) => {
           // console.log("Respon", res);
@@ -769,13 +679,7 @@ export default {
           alert(err);
         });
     },
-    // async handleAddLevel(index, row) {
-    //   this.dialogAddLevel = true;
-    //   const res = await this.getTeacherById(row.id);
-    //   const user = res.data;
-    //   console.log(user);
-    //   this.teacherObj = user.data;
-    // },
+   
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -785,7 +689,7 @@ export default {
           let payload = {
             level: "",
             subject: "",
-            grade: "8",
+            grade: "",
             canBeKeyTeacher: "",
           };
           payload.level = this.formLevel.level;
@@ -821,27 +725,7 @@ export default {
       this.dialogAddLevel = false;
       this.$refs[formName].resetFields();
     },
-    async handleUpdateLevel(index, row) {
-      this.dialogUpdateLevel = true;
-
-      const res = await this.getTeacherById(row.id);
-      const user = res.data;
-      // console.log(user);
-      this.teacherObj = user.data;
-      this.levelObj = user.data.level;
-      // console.log("levelObj",this.levelObj);
-      // this.form.gender = user.data.gender;
-      this.formLevel.canBeKeyTeacher = this.levelObj.canBeKeyTeacher;
-      let subjectArr = [];
-      if (this.levelObj.subject.length > 1) {
-        let subjects = this.levelObj.subject.split(",");
-        subjects.forEach(function (item, index, array) {
-          // console.log(item, index);
-          subjectArr.push(item);
-        });
-        this.formLevel.subject = subjectArr;
-      }
-    },
+   
     handleCloseSubmitForm(formName) {
       this.dialogUpdateLevel = false;
       this.$refs[formName].resetFields();

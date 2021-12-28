@@ -408,18 +408,15 @@ export default {
         })
         .catch((_) => {});
     },
-    async getClassById(id) {
-      let url = "http://localhost:8000/api/admin/class/delete/" + id;
+    async getClassById() {
+      let url = "http://localhost:8000/api/admin/grade/" + this.$route.params.id;
       let json = await get(url);
       return json;
     },
     async handleDelete(index, row) {
       this.dialogDelete = true
       const res = await this.getClassById(row.id);
-      console.log("res",res);
-      const user = res.data;
-      console.log("user",user);
-      this.classObj = user.data;
+      this.classObj = row;
     },
     confirmDelete(){
       let url = "http://localhost:8000/api/admin/class/delete/" + this.classObj.id

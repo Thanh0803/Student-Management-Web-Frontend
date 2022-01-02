@@ -11,23 +11,6 @@
           }"
         >
         </sidebar-item>
-
-        <sidebar-item v-if="role == 1"
-          :link="{
-            name: 'Home',
-            path: '/teacher',
-            icon: 'ni ni-tv-2 text-primary',
-          }"
-        >
-        </sidebar-item>
-        <sidebar-item v-if="role == 2"
-          :link="{
-            name: 'Home',
-            path: '/student',
-            icon: 'ni ni-tv-2 text-primary',
-          }"
-        >
-        </sidebar-item>
         <sidebar-item v-if="role == 0"
                   :link="{
                     name: 'Teacher Management',
@@ -64,6 +47,20 @@
               }"
           ></sidebar-item> 
           </sidebar-item>
+        <sidebar-item v-if="role == 0"
+                  :link="{
+                    name: 'Teacher Assignment',
+                    path: '/admin/assign/teacher',
+                    icon: 'ni ni-key-25 text-info'
+                  }"
+        ></sidebar-item>
+        <sidebar-item v-if="role == 1"
+          :link="{
+            name: 'Home',
+            path: '/teacher',
+            icon: 'ni ni-tv-2 text-primary',
+          }"
+        ></sidebar-item>
         <sidebar-item v-if="role == 1"
                   :link="{
                     name: 'Test and Mark Management',
@@ -77,8 +74,8 @@
               :index="index"
               :key="item.id"
               :link="{
-                name: item.subjectName + ' - ' + item.className ,
-                path: '/teacher/class/subject/' + item.id,
+                name: item.subject.subjectName + ' - ' + item.lop.className ,
+                path: '/teacher/class/subject/' + item.subject.id,
               }"
           ></sidebar-item>
         </sidebar-item>
@@ -100,13 +97,43 @@
               }"
           ></sidebar-item>
         </sidebar-item>
-        <sidebar-item v-if="role == 0"
-                  :link="{
-                    name: 'Teacher Assignment',
-                    path: '/admin/assign/teacher',
-                    icon: 'ni ni-key-25 text-info'
-                  }"
+        <sidebar-item v-if="role == 2"
+          :link="{
+            name: 'Home',
+            path: '/student',
+            icon: 'ni ni-tv-2 text-primary',
+          }"
         ></sidebar-item>
+         <sidebar-item v-if="role == 2"
+          :link="{
+            name: 'Mark Detail',
+            path: '/student',
+            icon: 'ni ni-tv-2 text-primary',
+          }"
+        >
+          <sidebar-item 
+            v-for="(item, index) in class_studentObj"
+                  :item="item"
+                  :index="index"
+                  :key="item.id"
+                  :link="{
+                    name: item.lop.className ,
+                    path: '/student/class/' + item.id, // item.id: id of division
+                  }"
+          >
+          </sidebar-item>
+        </sidebar-item>
+        <sidebar-item v-if="role == 2"
+          :link="{
+            name: 'Conduct Detail',
+            path: '/student/conduct/',
+            icon: 'ni ni-tv-2 text-primary',
+          }"
+        >
+        </sidebar-item>
+        
+        
+        
       </template>
     </side-bar>
     <div class="main-content">
@@ -167,6 +194,8 @@ export default {
     return {
       gradeObj: [],
       subjectObj:[],
+      class_studentObj:[],
+      subject_studentObj: [],
       AssignObj:[],
       ClassObj:[],
     };
@@ -190,12 +219,25 @@ export default {
           });
         }
       },
+      fetchClassStudentData() {
+      if (this.$store.getters.role == 2) {
+        let url ="http://localhost:8000/api/student/class/getall/"+this.$store.getters.user.id
+        get(url)
+          .then((res) => {
+            this.class_studentObj = res.data.data;
+          })
+          .catch((err) => {
+            alert(err);
+          });
+        }
+      },
       fetchSubjectData() {
-      if (this.$store.getters.role == 0) {
-        let url ="http://localhost:8000/api/admin/subject/getall" 
+      if (this.$store.getters.role == 0 ) {
+        let url ="http://localhost:8000/api/admin/subject/getall"
         get(url)
           .then((res) => {
             this.subjectObj = res.data.data;
+            // console.log("subject", this.subjectObj)
           })
           .catch((err) => {
             alert(err);
@@ -240,6 +282,7 @@ export default {
       this.fetchSubjectData()
       this.fetchAssignData()
       this.fetchClassData()
+      this.fetchClassStudentData()
     }
   };
 </script>

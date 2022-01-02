@@ -78,7 +78,7 @@
                 :total-rows="totalPage"
                 v-model="currentPage"
                 :per-page="perPage"
-                @input="getConductData(currentPage)"
+                @input="getAssignData(currentPage)"
               >
               <template v-slot:prev-text>
                   <a class="page-link" aria-label="Previous">
@@ -107,34 +107,40 @@
       >
         </el-dialog>
         <el-dialog
-        title="Chỉnh sửa thông tin hạnh kiểm"
+        title="Chỉnh sửa phân công giảng dạy"
         :visible.sync="dialogEdit"
         :before-close="handleClose"
         width="70%"
       >
         <el-form ref="form" :model="form" label-width="120px">
-          <el-form-item label="Mark">
+          <el-form-item label="FullName">
             <el-input
-              v-model="form.mark"
-              :placeholder="conductObj.mark"
+              v-model="form.fullname"
+              :placeholder="assignObj.fullName"
             ></el-input>
           </el-form-item>
-          <el-form-item label="Comment">
+          <el-form-item label="ClassName">
             <el-input
-              v-model="form.comment"
-              :placeholder="conductObj.comment"
+              v-model="form.className"
+              :placeholder="assignObj.className"
             ></el-input>
           </el-form-item>
           <el-form-item label="Semester">
             <el-input
               v-model="form.semester"
-              :placeholder="conductObj.semester"
+              :placeholder="assignObj.semester"
             ></el-input>
           </el-form-item>
           <el-form-item label="SchoolYear">
             <el-input
               v-model="form.schoolYear"
-              :placeholder="conductObj.schoolYear"
+              :placeholder="assignObj.schoolYear"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="Subject">
+            <el-input
+              v-model="form.subject"
+              :placeholder="assignObj.subject"
             ></el-input>
           </el-form-item>
           <el-form-item>
@@ -222,27 +228,17 @@ export default {
       dialogMultiDelete: false,
       student: [],
       form: {
-        mark: "",
+        fullname: "",
         schoolYear: "",
-        comment: "",
+        className: "",
         semester: "",
+        subject: "",
       },
-      conductObj: {},
+      assignObj: {},
       multipleSelection: [],
   
     };
   },
-  // created() {
-  // },
-  // watch: {
-  //   keyword(after, before) {
-  //     this.getResults();
-  //   },
-  //   "$route.params.id": function (id) {
-  //     this.getConductData();
-
-  //   },
-  // },
   computed: {
     ...mapGetters({
       //map `this.doneCount` to `this.$store.getters.doneTodosCount`
@@ -251,7 +247,7 @@ export default {
   },
   
   methods: {
-    getConductData(currentPage) {
+    getAssignData(currentPage) {
       let url =
         "http://localhost:8000/api/admin/assign/teacher?page="+ this.currentPage ;
 
@@ -276,14 +272,14 @@ export default {
     },
     onSubmitEdit() {
       // console.log("Form",this.form);
-      let url = "http://localhost:8000/api/teacher/conduct/update/" + this.conductObj.id;
+      let url = "http://localhost:8000/api/admin/assign/teacher/update/" + this.assignObj[0].id;
       let payload = this.form;
       console.log("payload", payload);
       put(url, payload)
         .then((res) => {
           // console.log("Respon", res);
           this.dialogEdit = false;
-          this.getConductData(this.currentPage);
+          this.getAssignData(this.currentPage);
           //   this.arrTeacher = res.data
           //   console.log(this.arrTeacher.length)
         })
@@ -298,24 +294,24 @@ export default {
         })
         .catch((_) => {});
     },
-    async getConductById(id) {
-      let url = "http://localhost:8000/api/teacher/conduct/detail/" + id;
+    async getAssigntById(id) {
+      let url = "http://localhost:8000/api/admin/assign/teacher/detail/" + id;
       let json = await get(url);
       return json;
     },
     async handleEdit(index, row) {
       this.dialogEdit = true;
 
-      const res = await this.getConductById(row.id);
+      const res = await this.getAssigntById(row.id);
       const user = res.data;
       console.log("user",res);
-      this.conductObj = user.data;
-      console.log("obj", this.conductObj)
+      this.assignObj = user.data;
+      console.log("obj", this.assignObj)
 
     },
   },
   mounted(currentPage) {
-    this.getConductData(currentPage);
+    this.getAssignData(currentPage);
       },
 };
 </script>

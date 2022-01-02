@@ -212,21 +212,24 @@ const routes = [
     path: "/student/",
     component: DashboardLayout,
     redirect: "/student/home/",
-    // meta: {
-    //   requiresAuth: true
-    // },
+ 
     beforeEnter: authStudent,
     children: [
       {
         path: "home",
         name: "SecureStudent",
         component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Student/Secure.vue')
+      },
+      {
+        path: "class/:id",
+        // name: "Mark Detail",
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Student/MarkDetail.vue')
+      },
+      {
+        path: "conduct",
+        // name: "Mark Detail",
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Student/ConductDetail.vue')
       }
-      // {
-      //   path: "dashboard",
-      //   name: "Dashboard",
-      //   component: Dashboard
-      // }
   
     ]
   },

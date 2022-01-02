@@ -90,8 +90,7 @@
           </b-card>
         </b-col>
       </b-row>
-      <!-- <div class="mt-5"></div>
-      <dark-table></dark-table> -->
+
       <el-dialog
         title="Chỉnh sửa điểm "
         :visible.sync="dialogEdit"
@@ -250,21 +249,23 @@ export default {
           this.totalPage = res.data.meta.total;
           this.posts = res.data.data;
           var temp = res.data.data;
+          console.log("temp", temp)
           
           let arr_fif = []
           let arr_fort = []
           let arr_nine = []
 
-          temp[0].type.fif.forEach((value, index) => {
-            var object_fif = {message : 'type.fif['+index +"].mark"}
+          temp[0].fif.forEach((value, index) => {
+            // console.log("value.mark",value.mark)
+            var object_fif = {message : 'fif['+index +"].mark"}
             arr_fif.push(object_fif)
           });
-          temp[0].type.fort.forEach((value, index) => {
-            var object_fort = {message : 'type.fort['+index +"].mark"}
+          temp[0].fort.forEach((value, index) => {
+            var object_fort = {message : 'fort['+index +"].mark"}
             arr_fort.push(object_fort)
           });
-          temp[0].type.nine.forEach((value, index) => {
-            var object_nine = {message : 'type.nine['+index +"].mark"}
+          temp[0].nine.forEach((value, index) => {
+            var object_nine = {message : 'nine['+index +"].mark"}
             arr_nine.push(object_nine)
           });
 
@@ -285,6 +286,7 @@ export default {
     },
      onSubmitEdit() {
       let url = "http://localhost:8000/api/teacher/mark/update/" + this.row_id;
+      console.log("url",url)
       let payload = this.form;
       console.log("payload", payload);
       put(url, payload)
@@ -318,17 +320,17 @@ export default {
       let fort = []
       let nine = []
 
-      row.type.fif.forEach((value, index) => {
+      row.fif.forEach((value, index) => {
         // console.log("value", value.mark)
         var obj_fif = {message : value.mark, id : value.id}
         fif.push(obj_fif);
       });
-      row.type.fort.forEach((value, index) => {
+      row.fort.forEach((value, index) => {
         // console.log("value", value.mark)
         var obj_fort = {message : value.mark, id : value.id}
         fort.push(obj_fort);
       });
-      row.type.nine.forEach((value, index) => {
+      row.nine.forEach((value, index) => {
         // console.log("value", value.mark)
         var obj_nine = {message : value.mark, id : value.id}
         nine.push(obj_nine);

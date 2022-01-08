@@ -32,16 +32,6 @@
                 min-width="150px"
                 prop="teacher.fullname"
               >
-                <!-- <template v-slot="{row}">
-                    <b-media no-body class="align-items-center">
-                        <a href="#" class="avatar rounded-circle mr-3">
-                            <img alt="Image placeholder" :src="row.img">
-                        </a>
-                        <b-media-body>
-                            <span class="font-weight-600 name mb-0 text-sm">{{row.title}}</span>
-                        </b-media-body>
-                    </b-media>
-                </template> -->
               </el-table-column>
               <el-table-column
                 label="Telephone Number"
@@ -75,56 +65,9 @@
                     @click="handleDelete(scope.$index, scope.row)"
                     >Delete</el-button
                   >
-                  <!-- <el-button
-                    size="mini"
-                    type="primary"
-                    v-if="scope.row.level == null"
-                    @click="handleAddLevel(scope.$index, scope.row)"
-                    >Add Level</el-button
-                  > -->
-                  <!-- <el-button
-                    v-if="scope.row.level != null"
-                    size="mini"
-                    type="primary"
-                    @click="handleUpdateLevel(scope.$index, scope.row)"
-                    >Update Level</el-button
-                  > -->
                 </template>
               </el-table-column>
 
-              <!-- <el-table-column label="Users" min-width="190px">
-                <div class="avatar-group">
-                    <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip"
-                       data-original-title="Ryan Tompson">
-                        <img alt="Image placeholder" src="/img/theme/team-1.jpg">
-                    </a>
-                    <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip"
-                       data-original-title="Romina Hadid">
-                        <img alt="Image placeholder" src="/img/theme/team-2.jpg">
-                    </a>
-                    <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip"
-                       data-original-title="Alexander Smith">
-                        <img alt="Image placeholder" src="/img/theme/team-3.jpg">
-                    </a>
-                    <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip"
-                       data-original-title="Jessica Doe">
-                        <img alt="Image placeholder" src="/img/theme/team-4.jpg">
-                    </a>
-                </div>
-            </el-table-column>
-
-            <el-table-column label="Completion"
-                             prop="completion"
-                             min-width="240px">
-                <template v-slot="{row}">
-                    <div class="d-flex align-items-center">
-                        <span class="completion mr-2">{{row.completion}}%</span>
-                        <div>
-                            <base-progress :type="row.statusType" :value="row.completion"/>
-                        </div>
-                    </div>
-                </template>
-            </el-table-column> -->
             </el-table>
             <b-card-footer class="py-4 d-flex justify-content-end">
               <!-- <base-pagination v-model="currentPage" :per-page="20" :total="50" :@input="getTeacherData(currentPage)"></base-pagination> -->
@@ -179,15 +122,6 @@
                   alt="Responsive image"
                 ></b-img>
               </div>
-              <!-- <br />
-              <h3 class="mb-0">Trình độ giáo viên</h3>
-              <br /> -->
-              <!-- <el-table :data="levelTeacher" style="width: 100%" border>
-                <el-table-column prop="key" align="center" label="Thông tin">
-                </el-table-column>
-                <el-table-column prop="name" align="center" label="Nội dung">
-                </el-table-column>
-              </el-table> -->
             </div>
           </el-col>
           <el-col :span="16"
@@ -201,7 +135,6 @@
                 </el-table-column>
               </el-table></div
           ></el-col>
-          <!-- <el-col :span="4"><div class="grid-content ">àdsff</div></el-col> -->
         </el-row>
         <span slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible = false">Cancel</el-button>
@@ -259,12 +192,6 @@
             <el-button @click="dialogEdit = false">Cancel</el-button>
           </el-form-item>
         </el-form>
-        <!-- <span slot="footer" class="dialog-footer">
-          <el-button @click="dialogVisible = false">Cancel</el-button>
-          <el-button type="primary" @click="dialogEdit = false"
-            >Confirm</el-button
-          >
-        </span> -->
       </el-dialog>
       <el-dialog
         title="Warning"
@@ -291,114 +218,6 @@
           >
           <el-button @click="dialogMultiDelete = false">Cancle</el-button>
         </span>
-      </el-dialog>
-      <el-dialog
-        title="Thêm trình độ giáo viên"
-        :visible.sync="dialogAddLevel"
-        width="50%"
-      >
-        <el-form
-          ref="formLevel"
-          :label-position="labelPosition"
-          :model="formLevel"
-          label-width="170px"
-        >
-        
-          <el-form-item
-            label="Trình độ tốt nghiệp"
-            prop="level"
-            :rules="[
-              {
-                required: true,
-                message: 'Không được để trống trường này',
-                trigger: 'blur',
-              },
-            ]"
-          >
-            <el-select
-              v-model="formLevel.level"
-              placeholder="please select teacher's level"
-            >
-              <el-option label="Tiến sỹ" value="Tiến sỹ"></el-option>
-              <el-option label="Thạc sỹ" value="Thạc sỹ"></el-option>
-              <el-option label="Đại Học" value="Đại học"></el-option>
-              <el-option label="Cao Đẳng" value="Cao đẳng"></el-option>
-              <el-option label="Sơ cấp" value="Sơ cấp"></el-option>
-            </el-select>
-          </el-form-item>
-         
-          <el-form-item
-            label="Mon hoc"
-            prop="subject"
-            :rules="[
-              {
-                required: true,
-                message: 'Không được để trống trường này',
-                trigger: 'blur',
-              },
-            ]"
-          >
-            <el-checkbox-group v-model="formLevel.subject">
-              <el-checkbox label="Toan" name="subject"></el-checkbox>
-              <el-checkbox label="Ngu Van" name="subject"></el-checkbox>
-              <el-checkbox label="Ngoai ngu" name="subject"></el-checkbox>
-              <el-checkbox label="Vat Ly" name="subject"></el-checkbox>
-              <el-checkbox label="Hoa hoc" name="subject"></el-checkbox>
-              <el-checkbox label="Lich su" name="subject"></el-checkbox>
-              <el-checkbox label="Dia ly" name="subject"></el-checkbox>
-              <el-checkbox label="GDCD" name="subject"></el-checkbox>
-            </el-checkbox-group>
-          </el-form-item>
-          <el-form-item label="Khả năng chủ nhiệm">
-            <el-radio-group v-model="formLevel.canBeKeyTeacher">
-              <el-radio label="Có" value="Yes"></el-radio>
-              <el-radio label="Không" value="No"></el-radio>
-            </el-radio-group>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="submitForm('formLevel')"
-              >Update</el-button
-            >
-            <el-button @click="handleCloseAddForm('formLevel')"
-              >Cancel</el-button
-            >
-          </el-form-item>
-        </el-form>
-        <!-- <span slot="footer" class="dialog-footer">
-          <el-button @click="dialogVisible = false">Cancel</el-button>
-          <el-button type="primary" @click="dialogEdit = false"
-            >Confirm</el-button
-          >
-        </span> -->
-      </el-dialog>
-      <el-dialog
-        title="Chỉnh sửa trình độ giáo viên"
-        :visible.sync="dialogUpdateLevel"
-        :before-close="handleClose"
-        width="50%"
-      >
-        <el-form
-          ref="formLevel"
-          :label-position="labelPosition"
-          :model="formLevel"
-          label-width="170px"
-        >
-
-          <el-form-item label="Khả năng chủ nhiệm">
-            <el-radio-group v-model="formLevel.canBeKeyTeacher">
-              <el-radio label="Có" value="Yes"></el-radio>
-              <el-radio label="Không" value="No"></el-radio>
-            </el-radio-group>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="submitEditLevelForm('formLevel')"
-              >Update</el-button
-            >
-            <el-button @click="handleCloseSubmitForm('formLevel')"
-              >Cancel</el-button
-            >
-          </el-form-item>
-        </el-form>
       </el-dialog>
     </b-container>
   </div>

@@ -2,62 +2,129 @@
   <div>
     <base-header class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-success"></base-header>
     <b-container fluid class="mt--7">
-      <b-row>
-        <b-col>
-          <b-card no-body>
-            <b-card-header class="border-0">
-              <h3 class="mb-0">Mark Detail</h3>
-            </b-card-header>
+      <div>
+        <b-card no-body>
+          <b-tabs card>
+            <b-tab title="Semester 1" active>
+              <b-row>
+                <b-col>
+                  <b-card no-body>
+                    <b-card-header class="border-0">
+                      <h3 class="mb-0">Mark Detail</h3>
+                    </b-card-header>
 
-            <el-table
-              class="table-responsive"
-              header-row-class-name="thead-dark"
-              :data="posts"
-            >
-              <el-table-column
-                  label="Subject"
-                  min-width="110px"
-                  align="center"
-                  v-for=" item in items_subject" :key="item.message"
-                  :prop = item.message
-                >
-                </el-table-column>
-              <el-table-column
-                label="15mins"
-                min-width="110px"
-                align="center"
-                v-for=" item in items_fif" :key="item.message"
-                :prop = item.message
-              >
-              </el-table-column>
-                <el-table-column
-                  label="45mins"
-                  min-width="110px"
-                  align="center"
-                  v-for="item in items_fort" :key="item.message"
-                  :prop = item.message
-                >
-                </el-table-column>
-              <el-table-column
-                label="90mins"
-                min-width="110px"
-                align="center"
-                v-for="item in items_nine" :key="item.message"
-                :prop = item.message
-              >    
-              </el-table-column>            
-            </el-table>
-            <b-card-footer class="py-4 d-flex justify-content-end">
-              <b-pagination
-                :total-rows="totalPage"
-                v-model="currentPage"
-                :per-page="perPage"
-                @input="getMarkData(currentPage)"
-              ></b-pagination>
-            </b-card-footer>
-          </b-card>
-        </b-col>
-      </b-row>
+                    <el-table
+                      class="table-responsive"
+                      header-row-class-name="thead-dark"
+                      :data="post_1"
+                    >
+                      <el-table-column
+                          label="Subject"
+                          min-width="110px"
+                          align="center"
+                          v-for=" item in items_subject" :key="item.message"
+                          :prop = item.message
+                        >
+                        </el-table-column>
+                      <el-table-column
+                        label="15mins"
+                        min-width="110px"
+                        align="center"
+                        v-for=" item in items_fif" :key="item.message"
+                        :prop = item.message
+                      >
+                      </el-table-column>
+                        <el-table-column
+                          label="45mins"
+                          min-width="110px"
+                          align="center"
+                          v-for="item in items_fort" :key="item.message"
+                          :prop = item.message
+                        >
+                        </el-table-column>
+                      <el-table-column
+                        label="90mins"
+                        min-width="110px"
+                        align="center"
+                        v-for="item in items_nine" :key="item.message"
+                        :prop = item.message
+                      >    
+                      </el-table-column>            
+                    </el-table>
+                    <b-card-footer class="py-4 d-flex justify-content-end">
+                      <b-pagination
+                        :total-rows="totalPage"
+                        v-model="currentPage"
+                        :per-page="perPage"
+                        @input="getMarkDataforpost_1(currentPage)"
+                      ></b-pagination>
+                    </b-card-footer>
+                  </b-card>
+                </b-col>
+              </b-row>
+            </b-tab>
+            <b-tab title="Semester 2">
+             <b-row>
+              <b-col>
+                <b-card no-body>
+                  <b-card-header class="border-0">
+                    <h3 class="mb-0">Mark Detail</h3>
+                  </b-card-header>
+
+                  <el-table
+                    class="table-responsive"
+                    header-row-class-name="thead-dark"
+                    :data="post_2"
+                  >
+                    <el-table-column
+                        label="Subject"
+                        min-width="110px"
+                        align="center"
+                        v-for=" item in items_subject" :key="item.message"
+                        :prop = item.message
+                      >
+                      </el-table-column>
+                    <el-table-column
+                      label="15mins"
+                      min-width="110px"
+                      align="center"
+                      v-for=" item in items_fif" :key="item.message"
+                      :prop = item.message
+                    >
+                    </el-table-column>
+                      <el-table-column
+                        label="45mins"
+                        min-width="110px"
+                        align="center"
+                        v-for="item in items_fort" :key="item.message"
+                        :prop = item.message
+                      >
+                      </el-table-column>
+                    <el-table-column
+                      label="90mins"
+                      min-width="110px"
+                      align="center"
+                      v-for="item in items_nine" :key="item.message"
+                      :prop = item.message
+                    >    
+                    </el-table-column>            
+                  </el-table>
+                  <b-card-footer class="py-4 d-flex justify-content-end">
+                    <b-pagination
+                      :total-rows="totalPage"
+                      v-model="currentPage"
+                      :per-page="perPage"
+                      @input="getMarkDataforpost_2(currentPage)"
+                    ></b-pagination>
+                  </b-card-footer>
+                </b-card>
+              </b-col>
+            </b-row>
+            </b-tab>
+          </b-tabs>
+        </b-card>
+      </div>
+      
     </b-container>
   </div>
 </template>
@@ -125,7 +192,8 @@ export default {
       currentPage: 1,
       totalPage: 1,
       perPage: 1,
-      posts: [],
+      post_1: [],
+      post_2: [],
       dialogVisible: false,
       dialogEdit: false,
       dialogDelete: false,
@@ -167,15 +235,15 @@ export default {
     }),
   },
   methods: {
-    getMarkData(currentPage) {
-      let url = "http://localhost:8000/api/student/mark/getall/"+this.$route.params.id+"?page=" + currentPage;
+    getMarkDataforpost_1(currentPage) {
+      let url = "http://localhost:8000/api/student/mark/getall/" + this.$route.params.id + "/semester/" + 1 +"?page=" + currentPage;
       get(url)
         .then((res) => {
           this.perPage = res.data.meta.per_page;
           this.totalPage = res.data.meta.total;
-          this.posts = res.data.data;
+          this.post_1 = res.data.data;
           var temp = res.data.data;
-          console.log("this.posts",this.posts)
+          // console.log("this.post_1",this.post_1)
           
           let arr_subject = []
           let arr_fif = []
@@ -183,7 +251,6 @@ export default {
           let arr_nine = []
 
           temp.forEach((element, index_element)=>{
-              if (index_element == 1)
               {
                 var object_subject = {message : 'subject.subjectName'}
                 arr_subject.push(object_subject)
@@ -205,9 +272,57 @@ export default {
           
 
           this.items_subject = arr_subject
-          console.log(" this.items_subject", this.items_subject)
+          // console.log(" this.items_subject", this.items_subject)
           this.items_fif = arr_fif 
-          console.log(" this.items_fif", this.items_fif)
+          // console.log(" this.items_fif", this.items_fif)
+          this.items_fort = arr_fort 
+          this.items_nine= arr_nine
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    },
+    getMarkDataforpost_2(currentPage) {
+      let url = "http://localhost:8000/api/student/mark/getall/" + this.$route.params.id + "/semester/" + 2 +"?page=" + currentPage;
+      get(url)
+        .then((res) => {
+          this.perPage = res.data.meta.per_page;
+          this.totalPage = res.data.meta.total;
+          this.post_2 = res.data.data;
+          var temp = res.data.data;
+          // console.log("this.posts2",this.post_2)
+          
+          let arr_subject = []
+          let arr_fif = []
+          let arr_fort = []
+          let arr_nine = []
+
+          temp.forEach((element, index_element)=>{
+              
+              {
+                var object_subject = {message : 'subject.subjectName'}
+                arr_subject.push(object_subject)
+              }
+          });
+          temp[0].fif.forEach((value, index) => {
+            var object_fif = {message : 'fif['+index +"].mark"}
+            arr_fif.push(object_fif)
+          });
+          temp[0].fort.forEach((value, index) => {
+            var object_fort = {message : 'fort['+index +"].mark"}
+            arr_fort.push(object_fort)
+          });
+          temp[0].nine.forEach((value, index) => {
+            var object_nine = {message : 'nine['+index +"].mark"}
+            arr_nine.push(object_nine)
+          });
+          
+          
+
+          this.items_subject = arr_subject
+          // console.log(" this.items_subject", this.items_subject)
+          this.items_fif = arr_fif 
+          // console.log(" this.items_fif", this.items_fif)
           this.items_fort = arr_fort 
           this.items_nine= arr_nine
         })
@@ -218,7 +333,8 @@ export default {
   },
     
   mounted(currentPage) {
-    this.getMarkData(currentPage);
+    this.getMarkDataforpost_1(currentPage);
+    this.getMarkDataforpost_2(currentPage)
   },
 };
 </script>

@@ -309,7 +309,7 @@ export default {
             .catch((_) => {});
     },
     async getMarkById(id) {
-      let url = "http://localhost:8000/api/head/teacher/type/" + id;
+      let url = "http://localhost:8000/api/teacher/type/" + id;
       let json = await get(url);
       return json;
     },

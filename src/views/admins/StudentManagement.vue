@@ -401,12 +401,11 @@ export default {
       get(url)
         .then((res) => {
           var user = res.data.data;
-          // this.teacher = Object.entries(user).map((e) => ( { [e[0]]: e[1] } ))
           var result = Object.keys(user).map((key) => ({
             key: key,
             name: user[key],
           }));
-          console.log("Result",result)
+          // console.log("Result",result)
           var temp = result.slice();
           temp.pop();
           var removed = temp.splice(2,1)

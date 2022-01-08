@@ -204,6 +204,21 @@ const routes = [
         path: "class/:id",
         name: "Mark Information",
         component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Teacher/ConductManagement.vue')
+      },
+      {
+        path: "headteacher/class/:id",
+        name: "Mark Information",
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Teacher/ClassManagement.vue') // quan ly lop chu nhiem
+      },
+      {
+        path: "mark/detail/:id",
+        name: "Mark Information",
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Teacher/SubjectInformation.vue') // quan ly lop chu nhiem
+      },
+      {
+        path: "student/report/:id",
+        name: "Student Report",
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Teacher/StudentReport.vue') // quan ly lop chu nhiem
       }
   
     ]

@@ -61,27 +61,54 @@
             icon: 'ni ni-tv-2 text-primary',
           }"
         ></sidebar-item>
+
+        <sidebar-item v-if="role == 1"
+          :link="{
+            name: 'Main Class',
+            path: '/teacher',
+            icon: 'ni ni-key-25 text-info',
+          }"
+        >
+          <sidebar-item
+              v-for="(item, index) in AllclassObj"
+                :item="item"
+                :index="index"
+                :key="item.id"
+                :link="{
+                  name: item.className ,
+                  path: '/teacher/headteacher/class/' + item.id,
+                }"
+            ></sidebar-item>
+        </sidebar-item>
+        
         <sidebar-item v-if="role == 1"
                   :link="{
-                    name: 'Test and Mark Management',
+                    name: 'Subject Management',
                     path: '/admin/test&mark',
                     icon: 'ni ni-key-25 text-info'
                   }"
         >
-          <sidebar-item
-            v-for="(item, index) in AssignObj"
-              :item="item"
-              :index="index"
-              :key="item.id"
-              :link="{
-                name: item.subject.subjectName + ' - ' + item.lop.className ,
-                path: '/teacher/class/subject/' + item.subject.id,
-              }"
-          ></sidebar-item>
-        </sidebar-item>
-        <sidebar-item v-if="role == 1"
+          <sidebar-item v-if="role == 1"
+                    :link="{
+                      name: 'Mark',
+                      path: '/admin/test&mark',
+                      icon: 'ni ni-key-25 text-info'
+                    }"
+          >
+            <sidebar-item
+              v-for="(item, index) in AssignObj"
+                :item="item"
+                :index="index"
+                :key="item.id"
+                :link="{
+                  name: item.subject.subjectName + ' - ' + item.lop.className ,
+                  path: '/teacher/class/subject/' + item.subject.id,
+                }"
+            ></sidebar-item>
+          </sidebar-item>
+          <sidebar-item v-if="role == 1"
                   :link="{
-                    name: 'Conduct Management',
+                    name: 'Conduct',
                     path: '/admin/conduct',
                     icon: 'ni ni-key-25 text-info'
                   }"
@@ -97,6 +124,8 @@
               }"
           ></sidebar-item>
         </sidebar-item>
+        </sidebar-item>
+        
         <sidebar-item v-if="role == 2"
           :link="{
             name: 'Home',
@@ -198,6 +227,7 @@ export default {
       subject_studentObj: [],
       AssignObj:[],
       ClassObj:[],
+      AllclassObj:[]
     };
   },
     methods: {
@@ -225,6 +255,19 @@ export default {
         get(url)
           .then((res) => {
             this.class_studentObj = res.data.data;
+          })
+          .catch((err) => {
+            alert(err);
+          });
+        }
+      },
+      GetStudentfromHeadData() {
+      if (this.$store.getters.role == 1) {
+        let url = "http://localhost:8000/api/head/teacher/getall/class/" + this.$store.getters.user.id
+        get(url)
+          .then((res) => {
+            this.AllclassObj = res.data.data;
+            // console.log("this.AllclassObj",this.AllclassObj)
           })
           .catch((err) => {
             alert(err);
@@ -261,7 +304,7 @@ export default {
       fetchClassData() {
       if (this.$store.getters.role == 1) {
         
-        let url = "http://localhost:8000/api/head/teacher/class/"+this.$store.getters.user.id ;
+        let url = "http://localhost:8000/api/teacher/class/"+this.$store.getters.user.id ;
         // console.log("URL",url)
         get(url)
           .then((res) => {
@@ -283,6 +326,7 @@ export default {
       this.fetchAssignData()
       this.fetchClassData()
       this.fetchClassStudentData()
+      this.GetStudentfromHeadData()
     }
   };
 </script>

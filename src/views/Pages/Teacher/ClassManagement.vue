@@ -10,6 +10,15 @@
           <b-card no-body>
             <b-card-header class="border-0">
               <h3 class="mb-0">Student List</h3>
+     
+            <div class="right">
+            <el-button 
+              size="mini"
+              type="success"
+              @click="classReport"
+              class="import-button">
+              Class Report</el-button>
+            </div>
             </b-card-header>
             <el-table
               class="table-responsive table"
@@ -21,12 +30,14 @@
               </el-table-column>
 
               <el-table-column
+                align="center"
                 label="FullName"
                 min-width="150px"
                 prop="student.fullname"
               >
               </el-table-column>
               <el-table-column
+                align="center"
                 label="TelePhone"
                 prop="student.phone"
                 min-width="140px"
@@ -225,6 +236,7 @@ export default {
     },
     "$route.params.id": function (id) {
       this.getStudentData();
+      this.classReport();
 
     },
   },
@@ -237,7 +249,7 @@ export default {
   
   methods: {
     getStudentData(currentPage) {
-      let url = "http://localhost:8000/api/head/teacher/getall/student/"+ this.$route.params.id +"?page="+ this.currentPage ;
+      let url = "http://localhost:8000/api/head/teacher/getall/student/"+ this.$route.params.id +"?page="+ currentPage ;
       get(url)
         .then((res) => {
           this.perPage = res.data.data.per_page;
@@ -289,6 +301,9 @@ export default {
     {
       this.$router.push('/teacher/student/report/'+row.id)
     },
+    classReport(){
+      this.$router.push('/teacher/class/report/'+this.$route.params.id)
+    },
     handleClose(done) {
       this.$confirm("Are you sure to close this dialog?")
         .then((_) => {
@@ -331,4 +346,9 @@ export default {
   position: absolute;
   left: 10%;
 }
+div.right{
+  
+    /* align-content: right; */
+    margin-left: 750px; 
+        }
 </style>

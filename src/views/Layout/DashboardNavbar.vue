@@ -7,7 +7,6 @@
     <a href="#" aria-current="page" class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block active router-link-active"> {{$route.name}} </a>
     <!-- Navbar links -->
     <b-navbar-nav class="align-items-center ml-md-auto">
-      <!-- This item dont have <b-nav-item> because item have data-action/data-target on tag <a>, wich we cant add -->
       <li class="nav-item d-sm-none">
         <a class="nav-link" href="#" data-action="search-show" data-target="#navbar-search-main">
           <i class="ni ni-zoom-split-in"></i>
@@ -15,7 +14,7 @@
       </li>
     </b-navbar-nav>
     <b-navbar-nav class="align-items-center ml-auto ml-md-0">
-        <b-form class="navbar-search form-inline mr-sm-3"
+        <!-- <b-form class="navbar-search form-inline mr-sm-3"
             :class="{'navbar-search-dark': type === 'default', 'navbar-search-light': type === 'light'}"
             id="navbar-search-main">
         <b-form-group class="mb-0">
@@ -27,7 +26,7 @@
             </div>
           </b-input-group>
         </b-form-group>
-      </b-form>
+      </b-form> -->
       <base-dropdown menu-on-right
                      class="nav-item"
                      tag="li"

@@ -101,7 +101,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "demo" */ '../views/GoogleMaps.vue')
       },
       {
-        path: 'teacher',
+        path: 'teacher/subject/getall/:id',
         name: 'teacher',
         component: () => import(/* webpackChunkName: "demo" */ '../views/admins/TeacherManagement.vue')
       },
@@ -116,9 +116,9 @@ const routes = [
         component: () => import(/* webpackChunkName: "demo" */ '../views/admins/GradeManagement.vue')
       },
       {
-        path: 'subject/:id',
+        path: 'teacher/subject',
         name: 'subject',
-        component: () => import(/* webpackChunkName: "demo" */ '../views/admins/TeacherManagement.vue')
+        component: () => import(/* webpackChunkName: "demo" */ '../views/admins/TeacherSubjectManagement.vue')
       },
       {
         path: 'tables',
@@ -149,6 +149,31 @@ const routes = [
         path: 'class/upload/:id',
         name: 'Class',
     component: () => import(/* webpackChunkName: "demo" */ '../views/admins/GradeManagement.vue')
+      },
+      {
+        path: 'grade/report/getall',
+        name: 'Report',
+    component: () => import(/* webpackChunkName: "demo" */ '../views/admins/GradeReport.vue')
+      },
+      {
+        path: 'class/report/getall',
+        name: 'Report',
+    component: () => import(/* webpackChunkName: "demo" */ '../views/admins/ClassReportAdmin.vue')
+      },
+      {
+        path: 'subject/report/getall',
+        name: 'Report',
+    component: () => import(/* webpackChunkName: "demo" */ '../views/admins/SubjectReport.vue')
+      },
+      {
+        path: 'grade/conduct/report/getall',
+        name: 'Report',
+    component: () => import(/* webpackChunkName: "demo" */ '../views/admins/ConductReportGrade.vue')
+      },
+      {
+        path: 'class/conduct/report/getall',
+        name: 'Report',
+    component: () => import(/* webpackChunkName: "demo" */ '../views/admins/ConductReportClass.vue')
       },
     ]
   },
@@ -201,7 +226,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Teacher/MarkManagement.vue')
       },
       {
-        path: "class/:id",
+        path: "conduct/:id",
         name: "Mark Information",
         component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Teacher/ConductManagement.vue')
       },
@@ -219,7 +244,18 @@ const routes = [
         path: "student/report/:id",
         name: "Student Report",
         component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Teacher/StudentReport.vue') // quan ly lop chu nhiem
-      }
+      },
+      {
+        path: "class/report/:id",
+        name: "Class Report",
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Teacher/ClassReport.vue') // quan ly lop chu nhiem
+      },
+      {
+        path: "change_password/",
+        name: "Change Password",
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Teacher/ChangePassword.vue') // quan ly lop chu nhiem
+      },
+      
   
     ]
   },
@@ -244,7 +280,12 @@ const routes = [
         path: "conduct",
         // name: "Mark Detail",
         component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Student/ConductDetail.vue')
-      }
+      },
+      {
+        path: "change_password/",
+        name: "Change Password",
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Student/ChangePassword.vue') // quan ly lop chu nhiem
+      },
   
     ]
   },

@@ -5,64 +5,64 @@
     </base-header>
 
     <b-container fluid class="mt--7">
-      <b-row>
-        <b-col>
+     <b-row>
+       <b-col>
           <b-card no-body>
             <b-card-header class="border-0">
-              <h3 class="mb-0">Student List</h3>
+              <h3 class="mb-0">Subject List</h3>
             </b-card-header>
             <el-table
-              class="table-responsive table"
+
+              class="table table-bordered"
               header-row-class-name="thead-light"
+              :span-method="objectSpanMethod"
               :data="posts"
               @selection-change="handleSelectionChange"
             >
-              <el-table-column type="selection" min-width="55px">
-              </el-table-column>
 
               <el-table-column
-                label="FullName"
+                align="center"
+                label=" Grade"
                 min-width="150px"
-                prop="student.fullname"
+                prop="grade"
               >
               </el-table-column>
               <el-table-column
-                label="TelePhone"
-                prop="student.phone"
+                align="center"
+                label="Subject"
+                prop="subjectName"
                 min-width="140px"
               >
               </el-table-column>
-              <el-table-column
-                label="Email"
-                prop="student.email"
-                min-width="140px"
-              >
-              </el-table-column>
-  
               <el-table-column label="Action" min-width="290px" align="center">
                 <template slot-scope="scope">
                   <el-button
-                    size="mini"
+                    size="default"
                     type="danger"
                     @click="handleDetail(scope.$index, scope.row)"
-                    >Report Detail</el-button
+                    >Detail</el-button
                   >
                 </template>
               </el-table-column>
 
             </el-table>
-
-            <b-card-footer class="py-4 d-flex justify-content-end position-relative">
-              <el-row class="position-absolute" v-if="multipleSelection.length > 1">
-                <el-button type="danger" @click="dialogMultiDelete=true">Xoá các lựa chọn</el-button>
+            <b-card-footer class="py-4 d-flex justify-content-end">
+              <!-- <base-pagination v-model="currentPage" :per-page="20" :total="50" :@input="getTeacherData(currentPage)"></base-pagination> -->
+              <el-row
+                class="position-absolute left-10"
+                v-if="multipleSelection.length > 1"
+              >
+                <el-button type="danger" @click="dialogMultiDelete = true"
+                  >Xoá các lựa chọn</el-button
+                >
               </el-row>
               <b-pagination
                 :total-rows="totalPage"
                 v-model="currentPage"
                 :per-page="perPage"
-                @input="getStudentData(currentPage)"
+                @input="getTeacherData(currentPage)"
               >
-              <template v-slot:prev-text>
+                <template v-slot:prev-text>
                   <a class="page-link" aria-label="Previous">
                     <span aria-hidden="true"
                       ><i class="fa fa-angle-left" aria-hidden="true"></i
@@ -79,17 +79,8 @@
               </b-pagination>
             </b-card-footer>
           </b-card>
-        </b-col>
+       </b-col>
       </b-row>
-      <div>
-        <el-dialog
-        title="Warning"
-        :visible.sync="dialogDelete"
-        width="30%"
-        center
-      >
-        </el-dialog>
-      </div>
     </b-container>
   </div>
 </template>
@@ -118,14 +109,13 @@ import {
   Radio,
   RadioGroup,
 } from "element-ui";
-import projects from "../../Tables/projects";
-import { get, put,del, post } from "../../../services/services";
-import Vue from "vue";
-import Vuelidate from 'vuelidate';
-Vue.use(Vuelidate);
+//   import projects from '../Tables/projects'
+import projects from "../Tables/projects";
+import users from "../Tables/users";
 import { mapGetters } from "vuex";
+import { get, put, del, post } from "../../services/services";
+import Vue from "vue";
 Vue.prototype.$confirm = MessageBox.confirm;
-
 export default {
   components: {
     //   LightTable,
@@ -162,20 +152,13 @@ export default {
       totalPage: 1,
       perPage: 1,
       posts: [],
-      keyword: null,
       dialogVisible: false,
       dialogEdit: false,
       dialogDelete: false,
       dialogMultiDelete: false,
-      student: [],
-      form: {
-        className: "",
-        schoolYear: "",
-        academicYear: "",
-        teacher_id: "",
-      },
+      dialogUpdateLevel: false,
+      dialogAddLevel: false,
       multipleSelection: [],
-      options: [],
     };
   },
   created() {
@@ -183,11 +166,7 @@ export default {
   watch: {
     keyword(after, before) {
       this.getResults();
-    },
-    "$route.params.id": function (id) {
-      this.getStudentData();
-
-    },
+    }, 
   },
   computed: {
     ...mapGetters({
@@ -195,44 +174,74 @@ export default {
       user: "user",
     }),
   },
-  
   methods: {
-    getStudentData(currentPage) {
-      let url = "http://localhost:8000/api/head/teacher/getall/student/"+ this.$route.params.id +"?page="+ this.currentPage ;
+    getTeacherData() {
+      let url = "http://localhost:8000/api/admin/subject/getall";
       get(url)
         .then((res) => {
-          this.perPage = res.data.data.per_page;
-          this.totalPage = res.data.data.total;
+        // console.log("res", res)
+          // this.perPage = res.data.meta.per_page;
+          // this.totalPage = res.data.meta.total;
           this.posts = res.data.data;
-            // console.log("this.posts",this.posts)
-
-      
         })
         .catch((err) => {
           alert(err);
         });
     },
-    handleSelectionChange(val) {
-      this.multipleSelection = val;
-      if(this.multipleSelection.length >1){
-
+    objectSpanMethod({ row, column, rowIndex, columnIndex }) {
+      let _row = 1,
+        _col = 1;
+      //The index of the column we want to merge
+      if (![0].includes(columnIndex)) {
+        return {
+          rowspan: 1,
+          colspan: 1
+        };
       }
+ 
+      const tableLen = this.posts.length;
+      
+      const preRow = this.posts[rowIndex - 1] || {};
+
+      if (
+        row.grade === preRow.grade 
+        ) {
+        _row = 0;
+
+      } else if (rowIndex + 1 < tableLen) {
+        for (let i = rowIndex + 1; i < tableLen; i++) {
+          const nextRow = this.posts[i];
+          if (
+            nextRow.grade === row.grade 
+          ) {
+            _row++;
+          } else {
+            break;
+          }
+        }
+      }
+      return {
+        rowspan: _row,
+        colspan: _col
+        
+      };
     },
-    handleDetail(index, row) {
-        // console.log("row", row)
-    this.$router.push('/teacher/headteacher/student/report/'+row.id)
-      },
-    handleClose(done) {
-      this.$confirm("Are you sure to close this dialog?")
-        .then((_) => {
-          done();
-        })
-        .catch((_) => {});
+    
+    handleDetail(index, row)
+    {
+      // console.log("row", row);
+      this.$router.push("/admin/teacher/subject/getall/"+row.id);
+    },
+    handleSelectionChange(val) {
+      // this.currentRow = val;
+      this.multipleSelection = val;
+      if (this.multipleSelection.length > 1) {
+      }
     },
   },
   mounted(currentPage) {
-    this.getStudentData(currentPage);
-      },
+    this.getTeacherData();
+  },
 };
 </script>
 <style>
@@ -250,18 +259,28 @@ export default {
 .el-table.table-dark th.is-leaf {
   border-bottom: none;
 }
-.el-table .cell,
+.el-table .cell{
+  font-size: 13px ;
+}
 .el-table th div {
   overflow: inherit !important;
 }
 .el-table th > .cell {
-  width: auto;
+  width: 100%;
 }
-.position-relative{
-  position: relative;
+.el-table th {
+  text-align: center;
 }
-.position-absolute{
-  position: absolute;
+.el-select {
+  width: 90%;
+}
+.left-10 {
   left: 10%;
 }
+
+div.right{
+  
+    /* align-content: right; */
+    margin-left: 880px; 
+        }
 </style>

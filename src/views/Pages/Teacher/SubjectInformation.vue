@@ -5,7 +5,7 @@
       <div>
         <b-card no-body>
           <b-tabs card>
-            <b-tab title="Tab 1" active>
+            <b-tab title="Semester 1" active>
               <b-row>
                 <b-col>
                   <b-card no-body>
@@ -62,7 +62,7 @@
                 </b-col>
               </b-row>
             </b-tab>
-            <b-tab title="Tab 2">
+            <b-tab title="Semester 2">
              <b-row>
               <b-col>
                 <b-card no-body>
@@ -79,8 +79,7 @@
                         label="Subject"
                         min-width="110px"
                         align="center"
-                        v-for=" item in items_subject" :key="item.message"
-                        :prop = item.message
+                        prop = "subject.subjectName"
                       >
                       </el-table-column>
                     <el-table-column
@@ -224,7 +223,8 @@ export default {
       this.getResults();
     },
     "$route.params.id": function (id) {
-      this.getMarkData();
+      this.getMarkDataforpost_1();
+      this.getMarkDataforpost_2();
     },    
   },
   computed: {
@@ -236,14 +236,14 @@ export default {
   methods: {
     getMarkDataforpost_1(currentPage) {
       let url = "http://localhost:8000/api/teacher/mark/getall/" + this.$route.params.id + "/semester/" + 1 +"?page=" + currentPage;
-      console.log("url",url)
+      // console.log("url",url)
       get(url)
         .then((res) => {
           this.perPage = res.data.meta.per_page;
           this.totalPage = res.data.meta.total;
           this.post_1 = res.data.data;
           var temp = res.data.data;
-          console.log("temp",temp)
+          // console.log("this.posts1",this.post_1)
           
           let arr_subject = []
           let arr_fif = []
@@ -279,7 +279,7 @@ export default {
           this.totalPage = res.data.meta.total;
           this.post_2 = res.data.data;
           var temp = res.data.data;
-        //   console.log("this.posts2",this.post_2)
+          // console.log("this.posts2",this.post_2)
           
           let arr_subject = []
           let arr_fif = []

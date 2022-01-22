@@ -12,7 +12,7 @@
                       class="mb-4">
 
             <template slot="footer">
-              <span class="text-success mr-2">3.48%</span>
+              <!-- <span class="text-success mr-2">3.48%</span> -->
               <span class="text-nowrap">Since last month</span>
             </template>
           </stats-card>
@@ -25,20 +25,7 @@
                       class="mb-4">
 
             <template slot="footer">
-              <span class="text-success mr-2">12.18%</span>
-              <span class="text-nowrap">Since last month</span>
-            </template>
-          </stats-card>
-        </b-col>
-        <b-col xl="3" md="6">
-          <stats-card title="Total classs"
-                      type="gradient-green"
-                      :sub-title= "arrStudent.toString()"
-                      icon="ni ni-chart-bar-32"
-                      class="mb-4">
-
-            <template slot="footer">
-              <span class="text-success mr-2">15.08%</span>
+              <!-- <span class="text-success mr-2">12.18%</span> -->
               <span class="text-nowrap">Since last month</span>
             </template>
           </stats-card>
@@ -46,106 +33,35 @@
         <b-col xl="3" md="6">
           <stats-card title="Total Admin"
                       type="gradient-info"
-                      :sub-title= "arrStudent.toString()"
+                      :sub-title= "arrAdmin.toString()"
                       icon="ni ni-money-coins"
                       class="mb-4">
 
             <template slot="footer">
-              <span class="text-success mr-2">13.98%</span>
+              <!-- <span class="text-success mr-2">13.98%</span> -->
               <span class="text-nowrap">Since last month</span>
             </template>
           </stats-card>
         </b-col>
-        <!-- <b-col xl="3" md="6">
-          <stats-card title="Total class"
+        <b-col xl="3" md="6">
+          <stats-card title="Total classs"
                       type="gradient-green"
-                      sub-title="924"
-                      icon="ni ni-money-coins"
-                      class="mb-4">
-
-            <template slot="footer">
-              <span class="text-danger mr-2">5.72%</span>
-              <span class="text-nowrap">Since last month</span>
-            </template>
-          </stats-card>
-
-        </b-col> -->
-        
-        <!-- <b-col xl="3" md="6">
-          <stats-card title="Performance"
-                      type="gradient-info"
-                      sub-title="49,65%"
+                      :sub-title= "arrClass.toString()"
                       icon="ni ni-chart-bar-32"
                       class="mb-4">
 
             <template slot="footer">
-              <span class="text-success mr-2">54.8%</span>
+              <!-- <span class="text-success mr-2">15.08%</span> -->
               <span class="text-nowrap">Since last month</span>
             </template>
           </stats-card>
-        </b-col> -->
+        </b-col>
       </b-row>
     </base-header>
 
     <!--Charts-->
     <b-container fluid class="mt--7">
-      <b-row>
-        <b-col xl="8" class="mb-5 mb-xl-0">
-          <card type="default" header-classes="bg-transparent">
-            <b-row align-v="center" slot="header">
-              <b-col>
-                <h6 class="text-light text-uppercase ls-1 mb-1">Overview</h6>
-                <h5 class="h3 text-white mb-0">Sales value</h5>
-              </b-col>
-              <b-col>
-                <b-nav class="nav-pills justify-content-end">
-                  <b-nav-item
-                       class="mr-2 mr-md-0"
-                       :active="bigLineChart.activeIndex === 0"
-                       link-classes="py-2 px-3"
-                       @click.prevent="initBigChart(0)">
-                      <span class="d-none d-md-block">Month</span>
-                      <span class="d-md-none">M</span>
-                  </b-nav-item>
-                  <b-nav-item
-                    link-classes="py-2 px-3"
-                    :active="bigLineChart.activeIndex === 1"
-                    @click.prevent="initBigChart(1)"
-                  >
-                    <span class="d-none d-md-block">Week</span>
-                    <span class="d-md-none">W</span>
-                  </b-nav-item>
-                </b-nav>
-              </b-col>
-            </b-row>
-            <line-chart
-              :height="350"
-              ref="bigChart"
-              :chart-data="bigLineChart.chartData"
-              :extra-options="bigLineChart.extraOptions"
-            >
-            </line-chart>
-          </card>
-        </b-col>
 
-        <b-col xl="4" class="mb-5 mb-xl-0">
-          <card header-classes="bg-transparent">
-            <b-row align-v="center" slot="header">
-              <b-col>
-                <h6 class="text-uppercase text-muted ls-1 mb-1">Performance</h6>
-                <h5 class="h3 mb-0">Total orders</h5>
-              </b-col>
-            </b-row>
-
-            <bar-chart
-              :height="350"
-              ref="barChart"
-              :chart-data="redBarChart.chartData"
-            >
-            </bar-chart>
-          </card>
-        </b-col>
-      </b-row>
       <!-- End charts-->
 
       <!--Tables-->
@@ -153,9 +69,7 @@
         <b-col xl="8" class="mb-5 mb-xl-0">
           <page-visits-table></page-visits-table>
         </b-col>
-        <b-col xl="4" class="mb-5 mb-xl-0">
-          <social-traffic-table></social-traffic-table>
-        </b-col>
+       
       </b-row>
       <!--End tables-->
     </b-container>
@@ -217,7 +131,9 @@
           extraOptions: chartConfigs.blueChartOptions
         },
         arrTeacher : [],
-        arrStudent : []
+        arrStudent : [],
+        arrAdmin: [],
+        arrClass: [],
       };
     },
     methods: {
@@ -235,33 +151,59 @@
         this.bigLineChart.activeIndex = index;
       },
       initDataTeacher(){
-        // let url = 'http://127.0.0.1:8000/api/teacher'
-        // get(url).then(res =>{
-        //   console.log("Respon",res)
-        //   this.arrTeacher = res.data
-        //   // console.log(this.arrTeacher.length)
-        //   })
-        // .catch(
-        //   err => {
-        //     alert(err)
-        //   }
-        // )
-        this.arrTeacher = 20
+        let url = 'http://localhost:8000/api/admin/teacher/total/'
+        get(url).then(res =>{
+          // console.log("Respon",res)
+          this.arrTeacher = res.data
+          // console.log(this.arrTeacher.length)
+          })
+        .catch(
+          err => {
+            alert(err)
+          }
+        )
       },
       initDataStudent()
       {
-        // let url = 'http://127.0.0.1:8000/api/student'
-        // get(url).then(res =>{
-        //   console.log("Respon",res)
-        //   this.arrStudent = res.data
-        //   console.log(this.arrStudent)
-        //   })
-        // .catch(
-        //   err => {
-        //     alert(err)
-        //   }
-        // )
-        this.arrStudent = 10
+        let url = 'http://localhost:8000/api/admin/student/total/'
+        get(url).then(res =>{
+          // console.log("Respon",res)
+          this.arrStudent = res.data
+          // console.log(this.arrStudent)
+          })
+        .catch(
+          err => {
+            alert(err)
+          }
+        )
+      },
+      initDataAdmin()
+      {
+        let url = 'http://localhost:8000/api/admin/total/'
+        get(url).then(res =>{
+          // console.log("Respon",res)
+          this.arrAdmin = res.data
+          // console.log(this.arrStudent)
+          })
+        .catch(
+          err => {
+            alert(err)
+          }
+        )
+      },
+      initDataClass()
+      {
+        let url = 'http://localhost:8000/api/admin/class/total/'
+        get(url).then(res =>{
+          // console.log("Respon",res)
+          this.arrClass = res.data
+          // console.log(this.arrStudent)
+          })
+        .catch(
+          err => {
+            alert(err)
+          }
+        )
       }
 
     },
@@ -269,6 +211,8 @@
       this.initBigChart(0);
       this.initDataTeacher();
       this.initDataStudent();
+      this.initDataAdmin();
+      this.initDataClass();
     }
   };
 </script>

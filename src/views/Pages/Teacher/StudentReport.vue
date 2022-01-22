@@ -8,7 +8,7 @@
        <div>
         <b-card no-body>
           <b-tabs card>
-            <b-tab title="Semester 1"  >
+            <b-tab title="Semester 1" active >
               <div id="header_1">
                   <b-row>
                     <b-col>
@@ -151,7 +151,7 @@
                             label="Average"
                             min-width="110px"
                             align="center"
-                            prop = "sumary"
+                            prop = "sumary_2"
                           >    
                           </el-table-column>      
                         </el-table>
@@ -190,7 +190,7 @@
                 <i class="fas fa-thin fa-check"></i> Downloaded Successfully
               </b-button>
             </b-tab>
-            <b-tab title="All SchoolYear" active>
+            <b-tab title="All SchoolYear" >
               <div id="header_all">
                   <b-row>
                     <b-col>
@@ -610,6 +610,8 @@ export default {
               string_nine = string_nine + "\xa0\xa0\xa0" + value.mark
               });
           var avg = sum/count
+          console.log("sum", sum)
+          console.log("count", count)
           var avg = avg.toFixed(2)
 
           
@@ -694,14 +696,16 @@ export default {
         responses.forEach((response) => {
           this.arrConduct_1 = response.data.data;
           this.arrConduct_1.forEach((ele_conduct, index_conduct)=>{
-       
+            console.log("ele_conduct.semester",ele_conduct.schoolYear)
+            console.log("this.items_student_1.semester",this.items_student_1.schoolyear)
+
             if((ele_conduct.semester == this.items_student_1.semester) 
             && (ele_conduct.schoolYear == this.items_student_1.schoolyear ))
             {
               this.items_student_1["conduct"] = ele_conduct.mark
               this.arrFinal_1.push(this.items_student_1)
-              // this.arrFinal_all.push(this.items_student_1["finalmark"])
             }
+                        
           });
         })
     });
@@ -719,9 +723,21 @@ export default {
             && (ele_conduct.schoolYear == this.items_student_2.schoolyear ))
             {
               this.items_student_2["conduct"] = ele_conduct.mark
-              if ((ele_conduct.mark == "Good" && parseFloat(this.items_student_2.finalmark_year) >= 8.0))
+              if (parseFloat(this.items_student_2.finalmark_year) >= 8.0)
               {
-                this.items_student_2["getall"] = "Excellent Student"
+                this.items_student_2["getall"] = "Very good Student"
+              }else if(6.5<= parseFloat(this.items_student_2.finalmark_year) < 8.0)
+              {
+                this.items_student_2["getall"] = "Good Student"
+              }else if(5.0 <= parseFloat(this.items_student_2.finalmark_year) < 6.5)
+              {
+                this.items_student_2["getall"] = "Average Student"
+              }else if(3.5 <= parseFloat(this.items_student_2.finalmark_year) < 5.0)
+              {
+                this.items_student_2["getall"] = "Below average Student"
+              }else
+              {
+                this.items_student_2["getall"] = "Fail"
               }
               console.log(this.items_student_2)
               // console.log(parseFloat(this.items_student_2.finalmark_year))

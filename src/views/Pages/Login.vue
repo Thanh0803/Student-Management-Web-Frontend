@@ -6,8 +6,8 @@
         <div class="header-body text-center mb-7">
           <b-row class="justify-content-center">
             <b-col xl="5" lg="6" md="8" class="px-5">
-              <h1 class="text-white">Welcome!</h1>
-              <p class="text-lead text-white">ABC HIGH SCHOOL</p>
+              <h1 class="text-white">Welcome to Kien An High School!</h1>
+              <p class="text-lead text-white">Please Login with Username and Password</p>
             </b-col>
           </b-row>
         </div>
@@ -57,6 +57,29 @@
                     <!-- </b-form-group> -->
 
                     <!-- <div class="mt-3">Selected: <strong>{{ selected }}</strong></div> -->
+                    <b-form-group label="You are:" v-slot="{ ariaDescribedby }">
+                      <b-form-radio
+                        v-model="selected"
+                        :aria-describedby="ariaDescribedby"
+                        name="some-radios"
+                        value="0"
+                        >Admin</b-form-radio
+                      >
+                      <b-form-radio
+                        v-model="selected"
+                        :aria-describedby="ariaDescribedby"
+                        name="some-radios"
+                        value="1"
+                        >Teacher</b-form-radio
+                      >
+                      <b-form-radio
+                        v-model="selected"
+                        :aria-describedby="ariaDescribedby"
+                        name="some-radios"
+                        value="2"
+                        >Student</b-form-radio
+                      >
+                    </b-form-group>
                   </div>
                   <div class="text-center">
                     <base-button type="primary" native-type="submit" class="my-4">Sign in</base-button>

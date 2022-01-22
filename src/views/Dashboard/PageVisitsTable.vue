@@ -4,10 +4,7 @@
     <template v-slot:header>
       <b-row align-v="center">
         <b-col>
-          <h3 class="mb-0">Page visits</h3>
-        </b-col>
-        <b-col class="text-right">
-          <a href="#!" class="btn btn-sm btn-primary">See all</a>
+          <h3 class="mb-0">Number of Acount visiting</h3>
         </b-col>
       </b-row>
     </template>
@@ -56,35 +53,23 @@
       return {
         tableData: [
           {
-            page: '/argon/',
-            visitors: '4,569',
-            unique: '340',
-            bounceRate: '46,53%'
+            page: 'Admin',
+            visitors: '1',
+            unique: '2',
+            bounceRate: '50,00%'
           },
           {
-            page: '/argon/index.html',
-            visitors: '3,985',
-            unique: '319',
-            bounceRate: '46,53%'
+            page: 'Teacher',
+            visitors: '0',
+            unique: '3',
+            bounceRate: '0%'
           },
           {
-            page: '/argon/charts.html',
-            visitors: '3,513',
-            unique: '294',
-            bounceRate: '36,49%'
+            page: 'Student',
+            visitors: '0',
+            unique: '6',
+            bounceRate: '0%'
           },
-          {
-            page: '/argon/tables.html',
-            visitors: '2,050',
-            unique: '147',
-            bounceRate: '50,87%'
-          },
-          {
-            page: '/argon/profile.html',
-            visitors: '1,795',
-            unique: '190',
-            bounceRate: '46,53%'
-          }
         ]
       }
     }

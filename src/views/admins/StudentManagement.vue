@@ -8,15 +8,18 @@
       <b-row>
         <b-col>
           <b-card no-body>
+            
             <b-card-header class="border-0">
               <h3 class="mb-0">Current Student</h3>
             </b-card-header>
-            <el-button 
-              size="mini"
-              type="success"
-              @click="handleImport"
-              class="import-button">
-              Add Student List</el-button>
+            <div class="right" >
+              <el-button 
+                size="mini"
+                type="success"
+                @click="handleImport"
+                class="import-button">
+                Add Student List</el-button>
+            </div>
             <el-table
               class="table-responsive table"
               header-row-class-name="thead-light"
@@ -228,7 +231,7 @@
         center
       >
         <span
-          >Bạn có muốn xoá người này</span
+          >Do you want delete this person?</span
         >
         <span slot="footer" class="dialog-footer">
           <el-button type="primary" @click="confirmDelete">Confirm</el-button>
@@ -420,7 +423,6 @@ export default {
     },
     async handleEdit(index, row) {
       this.dialogEdit = true;
-
       const res = await this.getStudentById(row.id);
       const user = res.data;
       // console.log("AAAAAA",user);
@@ -547,4 +549,9 @@ export default {
   position: absolute;
   left: 10%;
 }
+div.right{
+  
+    /* align-content: right; */
+    margin-left: 890px !important; 
+        }
 </style>

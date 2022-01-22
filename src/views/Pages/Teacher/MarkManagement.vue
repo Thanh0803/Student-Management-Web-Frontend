@@ -5,127 +5,256 @@
     </base-header>
 
     <b-container fluid class="mt--7">
-      <b-row>
-        <b-col>
-          <b-card no-body>
-            <b-card-header class="border-0">
-              <h3 class="mb-0">Mark Detail</h3>
-            </b-card-header>
+      <b-card no-body>
+          <b-tabs card>
+            <b-tab title="Semester 1" active>
+              <b-row>
+                <b-col>
+                  <b-card no-body>
+                    <b-card-header class="border-0">
+                      <h3 class="mb-0">Mark Detail</h3>
+                    </b-card-header>
 
-            <el-table
-              class="table-responsive table"
-              header-row-class-name="thead-light"
-              :data="posts"
-              @selection-change="handleSelectionChange"
-            >
-              <el-table-column
-                fixed
-                label=" Fullname"
-                min-width="150px"
-                prop="student.fullname"
-                align="center"
-              >
-              </el-table-column>
-              <el-table-column
-                label="15mins"
-                min-width="110px"
-                align="center"
-                v-for=" item in items_fif" :key="item.message"
-                :prop = item.message
-              >
-              </el-table-column>
-                <el-table-column
-                  label="45mins"
-                  min-width="110px"
-                  align="center"
-                  v-for="item in items_fort" :key="item.message"
-                  :prop = item.message
-                >
-                </el-table-column>
-              <el-table-column
-                label="90mins"
-                min-width="110px"
-                align="center"
-                v-for="item in items_nine" :key="item.message"
-                :prop = item.message
-              >    
-              </el-table-column>
-              <el-table-column label="Action" min-width="120px" align="center" fixed="right">
-                <template slot-scope="scope">
-                  <el-button
-                    size="mini"
-                    type="danger"
-                    @click="handleEdit(scope.$index, scope.row)"
-                    >Edit</el-button
-                  >
-                </template>
-              </el-table-column>
+                    <el-table
+                      class="table-responsive table"
+                      header-row-class-name="thead-light"
+                      :data="posts"
+                      @selection-change="handleSelectionChange"
+                    >
+                      <el-table-column
+                        
+                        label=" Fullname"
+                        min-width="150px"
+                        prop="student.fullname"
+                        align="center"
+                      >
+                      </el-table-column>
+                      <el-table-column
+                        label="15mins"
+                        min-width="110px"
+                        align="center"
+                        v-for=" item in items_fif" :key="item.message"
+                        :prop = item.message
+                      >
+                      </el-table-column>
+                        <el-table-column
+                          label="45mins"
+                          min-width="110px"
+                          align="center"
+                          v-for="item in items_fort" :key="item.message"
+                          :prop = item.message
+                        >
+                        </el-table-column>
+                      <el-table-column
+                        label="90mins"
+                        min-width="110px"
+                        align="center"
+                        v-for="item in items_nine" :key="item.message"
+                        :prop = item.message
+                      >    
+                      </el-table-column>
+                      <el-table-column label="Action" min-width="120px" align="center" fixed="right">
+                        <template slot-scope="scope">
+                          <el-button
+                            size="mini"
+                            type="danger"
+                            @click="handleEdit_1(scope.$index, scope.row)"
+                            >Edit</el-button
+                          >
+                        </template>
+                      </el-table-column>
 
-            
-            </el-table>
-            <b-card-footer class="py-4 d-flex justify-content-end">
-              <!-- <base-pagination v-model="currentPage" :per-page="20" :total="50" :@input="getTeacherData(currentPage)"></base-pagination> -->
-              <b-pagination
-                :total-rows="totalPage"
-                v-model="currentPage"
-                :per-page="perPage"
-                @input="getMarkData(currentPage)"
-              >
-                <template v-slot:prev-text>
-                  <a class="page-link" aria-label="Previous">
-                    <span aria-hidden="true"
-                      ><i class="fa fa-angle-left" aria-hidden="true"></i
-                    ></span>
-                  </a>
-                </template>
-                <template v-slot:next-text>
-                  <a class="page-link" aria-label="Next">
-                    <span aria-hidden="true"
-                      ><i class="fa fa-angle-right" aria-hidden="true"></i
-                    ></span>
-                  </a>
-                </template>
-              </b-pagination>
-            </b-card-footer>
-          </b-card>
-        </b-col>
-      </b-row>
+                    
+                    </el-table>
+                    <b-card-footer class="py-4 d-flex justify-content-end">
+                      <!-- <base-pagination v-model="currentPage" :per-page="20" :total="50" :@input="getTeacherData(currentPage)"></base-pagination> -->
+                      <b-pagination
+                        :total-rows="totalPage"
+                        v-model="currentPage"
+                        :per-page="perPage"
+                        @input="getMarkData_1(currentPage)"
+                      >
+                        <template v-slot:prev-text>
+                          <a class="page-link" aria-label="Previous">
+                            <span aria-hidden="true"
+                              ><i class="fa fa-angle-left" aria-hidden="true"></i
+                            ></span>
+                          </a>
+                        </template>
+                        <template v-slot:next-text>
+                          <a class="page-link" aria-label="Next">
+                            <span aria-hidden="true"
+                              ><i class="fa fa-angle-right" aria-hidden="true"></i
+                            ></span>
+                          </a>
+                        </template>
+                      </b-pagination>
+                    </b-card-footer>
+                  </b-card>
+                </b-col>
+              </b-row>
 
-      <el-dialog
-        title="Chỉnh sửa điểm "
-        :visible.sync="dialogEdit"
-        :before-close="handleClose"
-        width="70%"
-      >
-        <el-form ref="form" :model="form" label-width="120px">
-          <el-form-item label="15mins">
-            <el-input
-              v-model="form.fif[item.id]"
-              v-for="item in fif_items" :key="item.id"
-              :placeholder = item.message
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="45mins">
-            <el-input
-              v-model="form.fort[item.id]"
-               v-for="item in fort_items" :key="item.id"
-              :placeholder = item.message
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="90mins">
-            <el-input
-              v-model="form.nine[item.id]"
-               v-for="item in nine_items" :key="item.id"
-              :placeholder = item.message
-            ></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="onSubmitEdit">Update</el-button>
-            <el-button @click="dialogEdit = false">Cancel</el-button>
-          </el-form-item>
-        </el-form>
-        
-      </el-dialog>
+              <el-dialog
+                title="Chỉnh sửa điểm "
+                :visible.sync="dialogEdit"
+                :before-close="handleClose"
+                width="70%"
+              >
+                <el-form ref="form" :model="form" label-width="120px">
+                  <el-form-item label="15mins">
+                    <el-input
+                      v-model="form.fif[item.id]"
+                      v-for="item in fif_items" :key="item.id"
+                      :placeholder = item.message
+                    ></el-input>
+                  </el-form-item>
+                  <el-form-item label="45mins">
+                    <el-input
+                      v-model="form.fort[item.id]"
+                      v-for="item in fort_items" :key="item.id"
+                      :placeholder = item.message
+                    ></el-input>
+                  </el-form-item>
+                  <el-form-item label="90mins">
+                    <el-input
+                      v-model="form.nine[item.id]"
+                      v-for="item in nine_items" :key="item.id"
+                      :placeholder = item.message
+                    ></el-input>
+                  </el-form-item>
+                  <el-form-item>
+                    <el-button type="primary" @click="onSubmitEdit_1">Update</el-button>
+                    <el-button @click="dialogEdit = false">Cancel</el-button>
+                  </el-form-item>
+                </el-form>
+                
+              </el-dialog>
+            </b-tab>
+            <b-tab title="Semester 2" >
+              <b-row>
+                <b-col>
+                  <b-card no-body>
+                    <b-card-header class="border-0">
+                      <h3 class="mb-0">Mark Detail</h3>
+                    </b-card-header>
+
+                    <el-table
+                      class="table-responsive table"
+                      header-row-class-name="thead-light"
+                      :data="posts_2"
+                      @selection-change="handleSelectionChange"
+                    >
+                      <el-table-column
+                        fixed
+                        label=" Fullname"
+                        min-width="150px"
+                        prop="student.fullname"
+                        align="center"
+                      >
+                      </el-table-column>
+                      <el-table-column
+                        label="15mins"
+                        min-width="110px"
+                        align="center"
+                        v-for=" item in items_fif" :key="item.message"
+                        :prop = item.message
+                      >
+                      </el-table-column>
+                        <el-table-column
+                          label="45mins"
+                          min-width="110px"
+                          align="center"
+                          v-for="item in items_fort" :key="item.message"
+                          :prop = item.message
+                        >
+                        </el-table-column>
+                      <el-table-column
+                        label="90mins"
+                        min-width="110px"
+                        align="center"
+                        v-for="item in items_nine" :key="item.message"
+                        :prop = item.message
+                      >    
+                      </el-table-column>
+                      <el-table-column label="Action" min-width="120px" align="center" fixed="right">
+                        <template slot-scope="scope">
+                          <el-button
+                            size="mini"
+                            type="danger"
+                            @click="handleEdit_2(scope.$index, scope.row)"
+                            >Edit</el-button
+                          >
+                        </template>
+                      </el-table-column>
+
+                    
+                    </el-table>
+                    <b-card-footer class="py-4 d-flex justify-content-end">
+                      <!-- <base-pagination v-model="currentPage" :per-page="20" :total="50" :@input="getTeacherData(currentPage)"></base-pagination> -->
+                      <b-pagination
+                        :total-rows="totalPage"
+                        v-model="currentPage"
+                        :per-page="perPage"
+                        @input="getMarkData_2(currentPage)"
+                      >
+                        <template v-slot:prev-text>
+                          <a class="page-link" aria-label="Previous">
+                            <span aria-hidden="true"
+                              ><i class="fa fa-angle-left" aria-hidden="true"></i
+                            ></span>
+                          </a>
+                        </template>
+                        <template v-slot:next-text>
+                          <a class="page-link" aria-label="Next">
+                            <span aria-hidden="true"
+                              ><i class="fa fa-angle-right" aria-hidden="true"></i
+                            ></span>
+                          </a>
+                        </template>
+                      </b-pagination>
+                    </b-card-footer>
+                  </b-card>
+                </b-col>
+              </b-row>
+              
+              <el-dialog
+                title="Chỉnh sửa điểm "
+                :visible.sync="dialogEdit"
+                :before-close="handleClose"
+                width="70%"
+              >
+                <el-form ref="form" :model="form" label-width="120px">
+                  <el-form-item label="15mins">
+                    <el-input
+                      v-model="form.fif[item.id]"
+                      v-for="item in fif_items" :key="item.id"
+                      :placeholder = item.message
+                    ></el-input>
+                  </el-form-item>
+                  <el-form-item label="45mins">
+                    <el-input
+                      v-model="form.fort[item.id]"
+                      v-for="item in fort_items" :key="item.id"
+                      :placeholder = item.message
+                    ></el-input>
+                  </el-form-item>
+                  <el-form-item label="90mins">
+                    <el-input
+                      v-model="form.nine[item.id]"
+                      v-for="item in nine_items" :key="item.id"
+                      :placeholder = item.message
+                    ></el-input>
+                  </el-form-item>
+                  <el-form-item>
+                    <el-button type="primary" @click="onSubmitEdit_2">Update</el-button>
+                    <el-button @click="dialogEdit = false">Cancel</el-button>
+                  </el-form-item>
+                </el-form>
+                
+              </el-dialog>
+            </b-tab>
+          </b-tabs>
+      </b-card>
     </b-container>
   </div>
 </template>
@@ -201,6 +330,7 @@ export default {
       totalPage: 1,
       perPage: 1,
       posts: [],
+      posts_2:[],
       dialogVisible: false,
       dialogEdit: false,
       dialogDelete: false,
@@ -231,7 +361,8 @@ export default {
       this.getResults();
     },
     "$route.params.id": function (id) {
-      this.getMarkData();
+      this.getMarkData_1();
+      this.getMarkData_2();
     },    
   },
   computed: {
@@ -241,16 +372,50 @@ export default {
     }),
   },
   methods: {
-    getMarkData(currentPage) {
-      let url = "http://localhost:8000/api/teacher/class/subject/detail/"+this.$route.params.id+"?page=" + currentPage;
+    getMarkData_1(currentPage) {
+      let url = "http://localhost:8000/api/teacher/class/subject/detail/"+1+"/"+this.$route.params.id+"?page=" + currentPage;
       get(url)
         .then((res) => {
           this.perPage = res.data.meta.per_page;
           this.totalPage = res.data.meta.total;
           this.posts = res.data.data;
           var temp = res.data.data;
-          console.log("temp", temp)
           
+          let arr_fif = []
+          let arr_fort = []
+          let arr_nine = []
+
+          temp[0].fif.forEach((value, index) => {
+            // console.log("value.mark",value.mark)
+            var object_fif = {message : 'fif['+index +"].mark"}
+            arr_fif.push(object_fif)
+          });
+          temp[0].fort.forEach((value, index) => {
+            var object_fort = {message : 'fort['+index +"].mark"}
+            arr_fort.push(object_fort)
+          });
+          temp[0].nine.forEach((value, index) => {
+            var object_nine = {message : 'nine['+index +"].mark"}
+            arr_nine.push(object_nine)
+          });
+
+          this.items_fif = arr_fif 
+          this.items_fort = arr_fort 
+          this.items_nine= arr_nine
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    },
+    getMarkData_2(currentPage) {
+      let url = "http://localhost:8000/api/teacher/class/subject/detail/"+2+"/"+this.$route.params.id+"?page=" + currentPage;
+      
+      get(url)
+        .then((res) => {
+          this.perPage = res.data.meta.per_page;
+          this.totalPage = res.data.meta.total;
+          this.posts_2 = res.data.data;
+          var temp = res.data.data;
           let arr_fif = []
           let arr_fort = []
           let arr_nine = []
@@ -284,23 +449,38 @@ export default {
 
       }
     },
-     onSubmitEdit() {
+    onSubmitEdit_1() {
       let url = "http://localhost:8000/api/teacher/mark/update/" + this.row_id;
-      console.log("url",url)
+      console.log("row",this.row)
       let payload = this.form;
       console.log("payload", payload);
       put(url, payload)
         .then((res) => {
           // console.log("Respon", res);
           this.dialogEdit = false;
-          this.getMarkData(this.currentPage);
+          this.getMarkData_1(this.currentPage);
         })
         .catch((err) => {
           alert(err);
         });
       // console.log("form", this.form);
     },
-  
+    onSubmitEdit_2() {
+      let url = "http://localhost:8000/api/teacher/mark/update/" + this.row_id;
+      console.log("row",this.row)
+      let payload = this.form;
+      console.log("payload", payload);
+      put(url, payload)
+        .then((res) => {
+          // console.log("Respon", res);
+          this.dialogEdit = false;
+          this.getMarkData_1(this.currentPage);
+        })
+        .catch((err) => {
+          alert(err);
+        });
+      // console.log("form", this.form);
+    },
     handleClose(done) {
         this.$confirm("Are you sure to close this dialog?")
             .then((_) => {
@@ -313,7 +493,7 @@ export default {
       let json = await get(url);
       return json;
     },
-    async handleEdit(index, row) {
+    async handleEdit_1(index, row) {
       this.dialogEdit = true;
 
       let fif = []
@@ -342,10 +522,41 @@ export default {
       // console.log("Row",row)
       this.row_id = row.id
     },
+    async handleEdit_2(index, row) {
+      this.dialogEdit = true;
+
+      let fif = []
+      let fort = []
+      let nine = []
+
+      row.fif.forEach((value, index) => {
+        // console.log("value", value.mark)
+        var obj_fif = {message : value.mark, id : value.id}
+        fif.push(obj_fif);
+      });
+      row.fort.forEach((value, index) => {
+        // console.log("value", value.mark)
+        var obj_fort = {message : value.mark, id : value.id}
+        fort.push(obj_fort);
+      });
+      row.nine.forEach((value, index) => {
+        // console.log("value", value.mark)
+        var obj_nine = {message : value.mark, id : value.id}
+        nine.push(obj_nine);
+      });
+
+      this.fif_items = fif
+      this.fort_items = fort
+      this.nine_items = nine
+      // console.log("Row",row)
+      this.row_id = row.id
+    },
+
   },
     
   mounted(currentPage) {
-    this.getMarkData(currentPage);
+    this.getMarkData_1(currentPage);
+    this.getMarkData_2(currentPage);
   },
 };
 </script>

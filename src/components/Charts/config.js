@@ -120,7 +120,7 @@ function chartOptions() {
       color: (mode === 'dark') ? colors.gray[900] : colors.gray[200],
       drawBorder: false,
       drawTicks: true,
-      zeroLineWidth: 1,
+      zeroLineWidth: 3,
       zeroLineColor: (mode === 'dark') ? colors.gray[900] : colors.gray[200],
       zeroLineBorderDash: [2],
       zeroLineBorderDashOffset: [2]
@@ -148,7 +148,7 @@ function chartOptions() {
     ticks: {
       padding: 20
     },
-    maxBarThickness: 10
+    maxBarThickness: 50
   });
 
   return options;
@@ -176,7 +176,7 @@ export let blueChartOptions = {
     yAxes: [{
       gridLines: {
         color: Charts.colors.gray[700],
-        zeroLineColor: Charts.colors.gray[700]
+        zeroLineColor: Charts.colors.gray[700],
       }
     }]
   }
@@ -198,7 +198,7 @@ export let lineChartOptionsBlue = {
   scales: {
     yAxes: [
       {
-        barPercentage: 1.6,
+        barPercentage: 1.8,
         gridLines: {
           drawBorder: false,
           color: 'rgba(29,140,248,0.0)',
@@ -207,8 +207,9 @@ export let lineChartOptionsBlue = {
         ticks: {
           suggestedMin: 60,
           suggestedMax: 125,
-          padding: 20,
-          fontColor: '#9e9e9e'
+          padding: 50,
+          fontColor: '#9e9e9e',
+          maxRotation: 100
         }
       }
     ],
@@ -223,7 +224,8 @@ export let lineChartOptionsBlue = {
         },
         ticks: {
           padding: 20,
-          fontColor: '#9e9e9e'
+          fontColor: '#9e9e9e',
+          maxRotation: 100
         }
       }
     ]

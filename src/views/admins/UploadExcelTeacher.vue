@@ -35,6 +35,7 @@
           <el-table-column prop="level" min-width="130px" label="Level" align="center"> </el-table-column>
           <el-table-column prop="password" min-width="130px" label="Password" align="center"> </el-table-column>
           <el-table-column prop="gender" min-width="45px" label="Gender" align="center"> </el-table-column>
+          <el-table-column prop="lop_id" min-width="45px" label="Lop_id" align="center"> </el-table-column>
         </el-table>
       </el-main>
       <div style="text-align: center;">
@@ -179,6 +180,7 @@ export default {
             obj.password = v["Password"];
             obj.phone = v["Telephone"];
             obj.gender = v["Gender"];
+            obj.lop_id = v["Lop_id"];
             nameTemp = obj.email.split('@');
             var birthdayTemp = v["Birthday"];
             // console.log("XXX", birthdayTemp)

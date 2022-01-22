@@ -14,26 +14,16 @@
         <sidebar-item v-if="role == 0"
                   :link="{
                     name: 'Teacher Management',
-                    path: '/admin/teacher',
+                    path: '/admin/teacher/subject',
                     icon: 'ni ni-key-25 text-info'
                   }"
         >
-          <sidebar-item
-          v-for="(item, index) in subjectObj"
-              :item="item"
-              :index="index"
-              :key="item.id"
-              :link="{
-                name: item.subjectName,
-                path: '/admin/subject/' + item.id,
-              }"
-        ></sidebar-item>
         </sidebar-item>
         <sidebar-item v-if="role == 0"
                 :link="{
                   name: 'Student Management',
                   path: '/admin/student',
-                  icon: 'ni ni-single-02 text-info'
+                  icon: 'ni ni-key-25 text-info'
                 }"
         > 
           <sidebar-item
@@ -49,11 +39,54 @@
           </sidebar-item>
         <sidebar-item v-if="role == 0"
                   :link="{
-                    name: 'Teacher Assignment',
-                    path: '/admin/assign/teacher',
+                    name: 'Mark Report',
+                    path: '/admin',
                     icon: 'ni ni-key-25 text-info'
                   }"
-        ></sidebar-item>
+        >
+          <sidebar-item 
+                    :link="{
+                      name: 'Grade ',
+                      path: '/admin/grade/report/getall',
+                    }"
+          ></sidebar-item>
+          <sidebar-item 
+                    :link="{
+                      name: 'Class ',
+                      path: '/admin/class/report/getall',
+                    }"
+          ></sidebar-item>
+          <sidebar-item 
+                    :link="{
+                      name: 'Subject ',
+                      path: '/admin/subject/report/getall',
+                    }"
+          ></sidebar-item>
+
+        </sidebar-item>
+
+        <sidebar-item v-if="role == 0"
+                  :link="{
+                    name: 'Conduct Report',
+                    path: '/admin',
+                    icon: 'ni ni-key-25 text-info'
+                  }"
+        >
+          <sidebar-item 
+                    :link="{
+                      name: 'Grade',
+                      path: '/admin/grade/conduct/report/getall',
+                    }"
+          ></sidebar-item>
+          <sidebar-item 
+                    :link="{
+                      name: 'Class',
+                      path: '/admin/class/conduct/report/getall',
+                    }"
+          ></sidebar-item>
+
+
+        </sidebar-item>
         <sidebar-item v-if="role == 1"
           :link="{
             name: 'Home',
@@ -76,9 +109,22 @@
                 :key="item.id"
                 :link="{
                   name: item.className ,
-                  path: '/teacher/headteacher/class/' + item.id,
+                  path: '/teacher',
                 }"
-            ></sidebar-item>
+            >
+              <sidebar-item v-if="role == 1"
+                  :link="{
+                    name: 'Mark',
+                    path: '/teacher/headteacher/class/' + item.id,
+                  }"
+              ></sidebar-item>
+              <sidebar-item v-if="role == 1"
+                  :link="{
+                    name: 'Conduct',
+                    path: '/teacher/conduct/' + item.id,
+                  }"
+              ></sidebar-item>
+            </sidebar-item>
         </sidebar-item>
         
         <sidebar-item v-if="role == 1"
@@ -88,44 +134,26 @@
                     icon: 'ni ni-key-25 text-info'
                   }"
         >
-          <sidebar-item v-if="role == 1"
-                    :link="{
-                      name: 'Mark',
-                      path: '/admin/test&mark',
-                      icon: 'ni ni-key-25 text-info'
-                    }"
-          >
-            <sidebar-item
-              v-for="(item, index) in AssignObj"
-                :item="item"
-                :index="index"
-                :key="item.id"
-                :link="{
-                  name: item.subject.subjectName + ' - ' + item.lop.className ,
-                  path: '/teacher/class/subject/' + item.subject.id,
-                }"
-            ></sidebar-item>
-          </sidebar-item>
-          <sidebar-item v-if="role == 1"
-                  :link="{
-                    name: 'Conduct',
-                    path: '/admin/conduct',
-                    icon: 'ni ni-key-25 text-info'
-                  }"
-        >
-           <sidebar-item
-            v-for="(item, index) in ClassObj"
+          <sidebar-item
+            v-for="(item, index) in AssignObj"
               :item="item"
               :index="index"
               :key="item.id"
               :link="{
-                name: item.className ,
-                path: '/teacher/class/' + item.id,
+                name: item.subject.subjectName + ' - ' + item.lop.className ,
+                path: '/teacher/class/subject/' + item.subject.id,
               }"
           ></sidebar-item>
         </sidebar-item>
+        <sidebar-item v-if="role == 1"
+          :link="{
+            name: 'Change Password',
+            path: '/teacher/change_password',
+            icon: 'fas fa-key text-danger',
+            
+          }"
+        >
         </sidebar-item>
-        
         <sidebar-item v-if="role == 2"
           :link="{
             name: 'Home',
@@ -151,6 +179,7 @@
                   }"
           >
           </sidebar-item>
+          
         </sidebar-item>
         <sidebar-item v-if="role == 2"
           :link="{
@@ -160,8 +189,15 @@
           }"
         >
         </sidebar-item>
-        
-        
+        <sidebar-item v-if="role == 2"
+          :link="{
+            name: 'Change Password',
+            path: '/student/change_password',
+            icon: 'fas fa-key text-danger',
+            
+          }"
+        >
+        </sidebar-item>
         
       </template>
     </side-bar>

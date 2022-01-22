@@ -7,7 +7,7 @@
           <b-tabs card>
             <b-tab title="Semester 1" active>
               <b-row>
-                <b-col>
+                <b-col>b-card
                   <b-card no-body>
                     <b-card-header class="border-0">
                       <h3 class="mb-0">Mark Detail</h3>

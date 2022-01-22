@@ -8,16 +8,26 @@
       <b-row>
         <b-col>
           <b-card no-body>
+            <div class="row justify-content-center">
+                <div class="card">
+                    <input 
+                      type="text" 
+                      v-model="searchText" 
+                      @keyup="getClassData()"
+                      placeholder="Enter School Year">
+                </div>
+            </div>
             <b-card-header class="border-0">
               <h3 class="mb-0">Class List</h3>
             </b-card-header>
-            <el-button 
-              size="mini"
-              type="success"
-              @click="handleAdd()"
-              class="import-button">
-              Add Class List</el-button>
-
+            <div class="right">
+              <el-button 
+                size="mini"
+                type="success"
+                @click="handleAdd()"
+                class="import-button">
+                Add Class</el-button>
+            </div>
             <el-table
               class="table-responsive table"
               header-row-class-name="thead-light"
@@ -28,18 +38,21 @@
               </el-table-column>
 
               <el-table-column
+                align="center"
                 label="ClassName"
                 min-width="150px"
                 prop="className"
               >
               </el-table-column>
               <el-table-column
+                align="center"
                 label="HeadTeacher"
                 prop="headTeacher"
                 min-width="140px"
               >
               </el-table-column>
               <el-table-column
+                align="center"
                 label="SchoolYear"
                 prop="schoolYear"
                 min-width="140px"
@@ -59,6 +72,12 @@
                     type="danger"
                     @click="handleDelete(scope.$index, scope.row)"
                     >Delete</el-button
+                  >
+                  <el-button
+                    size="mini"
+                    type="danger"
+                    @click="editClass(scope.$index, scope.row)"
+                    >Edit</el-button
                   >
                 </template>
               </el-table-column>
@@ -96,21 +115,83 @@
         </b-col>
       </b-row>
       <div>
+      <el-dialog
+        title="Edit Class"
+        :visible.sync="dialogEdit"
+        :before-close="handleClose"
+        width="70%"
+      >
+      <!-- <b-modal ref="modalAdd" size="xl" title="Thêm lớp học"
+        id="modal-add"
+        @show="resetModal"
+        @hidden="resetModal"
+        @ok="handleAddClass"> -->
+        <el-form ref="form" :model="form" :rules="rules" label-width="120px" @submit.stop.prevent="handleSubmitAdd">
+          <el-form-item label="ClassName">
+            <el-input
+              v-model="form.className"
+              :placeholder="classObj.className"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="AcademicYear">
+            <el-input
+              v-model="form.academicYear"
+              :placeholder="classObj.academicYear"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="SchoolYear">
+            <el-input
+              v-model="form.schoolYear"
+              :placeholder="classObj.schoolYear"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="Grade">
+            <el-input
+              v-model="form.grade_id"
+              :placeholder="classObj.grade_id"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="Teacher">
+            <el-select
+                      v-model="form.teacher_id"
+                      clearable
+                      filterable
+                      
+                    >
+                      <el-option
+                        v-for="item in options"
+                        :key="item.id"
+                        :label="item.fullname"
+                        :value="item.id"
+                      >
+                      </el-option>
+                    </el-select>
+          </el-form-item>
+      
+          <el-form-item>
+            <el-button type="primary" @click="onSubmitEdit">Update</el-button>
+            <el-button @click="dialogEdit = false">Cancel</el-button>
+          </el-form-item>
+        </el-form>
+        <!-- </b-modal> -->
+      </el-dialog>
+      </div>
+      <div>
         <el-dialog
         title="Warning"
         :visible.sync="dialogDelete"
         width="30%"
         center
       >
-        <h3 class="text-center"
-          >Bạn có muốn Xoá lớp này </h3>
-          <h4 class="text-center red" >(Toàn bộ học sinh trong lớp sẽ bị xoá)</h4>
-        <span slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="confirmDelete">Confirm</el-button>
-          <el-button  @click="dialogDelete = false"
-            >Cancle</el-button
+        <span
+            >Do you want delete this class ?</span
           >
-        </span>
+          <span slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="confirmDelete">Confirm</el-button>
+            <el-button  @click="dialogDelete = false"
+              >Cancle</el-button
+            >
+          </span>
         </el-dialog>
         <b-modal ref="modalAdd" size="xl" title="Thêm lớp học"
         id="modal-add"
@@ -230,7 +311,8 @@ export default {
   data() {
     return {
       projects,
-      // users
+      searchText: '',
+      text: '',
       currentPage: 1,
       totalPage: 1,
       perPage: 1,
@@ -246,6 +328,7 @@ export default {
         schoolYear: "",
         academicYear: "",
         teacher_id: "",
+        grade_id:"",
       },
       classObj: {},
       multipleSelection: [],
@@ -257,9 +340,9 @@ export default {
             { required: true, message: 'Nhập đủ tên lớp', trigger: 'blur' },
             // { min: 3, max: 5, message: 'Length should be 3 to 5', trigger: 'blur' }
           ],
-          teacher_id : [
-            { required: true, message: 'Nhập đủ GVCN', trigger: 'change' }
-          ],
+          // teacher_id : [
+          //   { required: true, message: 'Nhập đủ GVCN', trigger: 'change' }
+          // ],
           schoolYear: [
             { required: true, message: 'Nhập đủ tên trường', trigger: 'blur' },
             // { min: 3, max: 5, message: 'Length should be 3 to 5', trigger: 'blur' }
@@ -271,16 +354,13 @@ export default {
         }
     };
   },
-  created() {
-  },
   watch: {
     keyword(after, before) {
       this.getResults();
     },
     "$route.params.id": function (id) {
       this.getClassData();
-      this.getKeyTeacher();
-      this.handleSubmitAdd();
+    
     },
   },
   computed: {
@@ -292,9 +372,15 @@ export default {
   
   methods: {
     getClassData(currentPage) {
-      let url =
-        "http://localhost:8000/api/admin/grade/"+ this.$route.params.id +"?page="+ this.currentPage ;
+      // console.log("seacrText",this.searchText);
+      if (this.searchText.length == 4){
+        this.text = this.searchText
+      }else{
+        this.text = '2020'
+      }
+      let url = "http://localhost:8000/api/admin/grade/schoolyear/" + this.text+"/"+ this.$route.params.id +"?page="+ this.currentPage ;
       // console.log("URL",url);
+      
       get(url)
         .then((res) => {
           // console.log("Respon", res);
@@ -327,6 +413,7 @@ export default {
         this.handleSubmitAdd()
     },
     handleSubmitAdd(){
+        
         this.$refs["form"].validate((valid) => {
           if (valid) {
             let url = "http://localhost:8000/api/admin/class/upload/"+ this.$route.params.id;
@@ -337,9 +424,6 @@ export default {
               console.log("Respon", res);
               this.showNotification("success","Đã thêm thành công")
               this.getClassData(this.currentPage);
-              //   this.arrTeacher = res.data
-              //   console.log(this.arrTeacher.length)
-            //   this.getStudentData(this.currentPage);
           
         })
         .catch((err) => {
@@ -386,17 +470,54 @@ export default {
         this.form.className = ''
         this.form.schoolYear = ''
         this.form.academicYear = ''
+        this.form.teacher_id = ''
+
         this.options = []
-        // this.form.key_teacher = null
-        this.form.teacher_id = null
       },
+    async getClassById(id) {
+    let url = "http://localhost:8000/api/admin/class/detail/" + id;
+    // console.log(url)
+    let json = await get(url);
+    return json;
+    },
+    async editClass(index, row)
+    {
+      this.getKeyTeacher();
+      this.dialogEdit = true;
+      const res = await this.getClassById(row.id);
+      const user = res.data;
+      this.classObj = user.data;
+    },
+    onSubmitEdit() {
+      // console.log("Form",this.form);
+      
+      let url = "http://localhost:8000/api/admin/class/edit/" + this.classObj.id;
+      let payload = this.form;
+      console.log("payload", payload);
+      put(url, payload)
+        .then((res) => {
+          // console.log("Respon", res);
+          this.dialogEdit = false;
+          this.getClassData(this.currentPage);
+          this.showNotification("success","Đã thêm thành công")
+          //   this.arrTeacher = res.data
+          //   console.log(this.arrTeacher.length)
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    },
+    async getStudentById(id) {
+    let url = "http://localhost:8000/api/admin/student/" + id;
+    let json = await get(url);
+    return json;
+    },
     handleSelectionChange(val) {
       // this.currentRow = val;
       this.multipleSelection = val;
       if(this.multipleSelection.length >1){
 
       }
-        // console.log("Selection",this.multipleSelection)
     },
     handleDetail(index, row) {
     this.$router.push('/admin/grade/class/'+row.id)
@@ -408,15 +529,18 @@ export default {
         })
         .catch((_) => {});
     },
-    async getClassById() {
-      let url = "http://localhost:8000/api/admin/grade/" + this.$route.params.id;
-      let json = await get(url);
-      return json;
-    },
+    // async getClassById() {
+    //   let url = "http://localhost:8000/api/admin/grade/" + this.$route.params.id;
+    //   console.log(url)
+    //   let json = await get(url);
+    //   return json;
+    // },
     async handleDelete(index, row) {
       this.dialogDelete = true
       const res = await this.getClassById(row.id);
+      const user = res.data;
       this.classObj = row;
+      console.log("this.classObj",this.classObj);
     },
     confirmDelete(){
       let url = "http://localhost:8000/api/admin/class/delete/" + this.classObj.id
@@ -465,4 +589,9 @@ export default {
   position: absolute;
   left: 10%;
 }
+div.right{
+  
+    /* align-content: right; */
+    margin-left: 870px; 
+        }
 </style>

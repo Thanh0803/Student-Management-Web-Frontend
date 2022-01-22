@@ -8,15 +8,26 @@
       <b-row>
         <b-col>
           <b-card no-body>
+            <div class="row justify-content-center">
+                <div class="card">
+                    <input 
+                      type="text" 
+                      v-model="searchText" 
+                      @keyup="getTeacherData()"
+                      placeholder="Enter School Year">
+                </div>
+            </div>
             <b-card-header class="border-0">
               <h3 class="mb-0">Teacher List</h3>
             </b-card-header>
+            <div class="right" >
             <el-button 
               size="mini"
               type="success"
               @click="handleImport"
-              class="import-button">
+              class="add-button">
               Add Teacher List</el-button>
+            </div>
 
             <el-table
               class="table-responsive table"
@@ -28,21 +39,24 @@
               </el-table-column>
 
               <el-table-column
+                align="center"
                 label=" Fullname"
                 min-width="150px"
                 prop="teacher.fullname"
               >
               </el-table-column>
               <el-table-column
+                align="center"
                 label="Telephone Number"
                 prop="teacher.phone"
                 min-width="140px"
               >
               </el-table-column>
               <el-table-column
-                label="Gender"
+                align="center"
+                label="ClassName"
                 min-width="110px"
-                prop="teacher.gender"
+                prop="lop.className"
               >    
               </el-table-column>
               <el-table-column label="Action" min-width="290px" align="center">
@@ -298,6 +312,8 @@ export default {
       dialogAddLevel: false,
       teacher: [],
       levelTeacher: [],
+      text: '',
+      searchText: '',
       form: {
         username: "",
         fullname: "",
@@ -337,6 +353,11 @@ export default {
   },
   methods: {
     getTeacherData(currentPage) {
+       if (this.searchText.length == 4){
+        this.text = this.searchText
+      }else{
+        this.text = '2020'
+      }
       let url = "http://localhost:8000/api/admin/teacher/subject/getall/"+this.$route.params.id+"?page=" + this.currentPage;
       // console.log("URL",url)
       get(url)
@@ -355,7 +376,7 @@ export default {
       // this.currentRow = val;
     },
     handleDetail(index, row) {
-      // console.log(index, row.id);
+      // console.log(index, row);
       this.dialogVisible = true;
       let url = "http://localhost:8000/api/admin/teacher/" + row.id;
       get(url)
@@ -397,19 +418,17 @@ export default {
         });
 
       // var arr = Object.keys(user).map((key) => [Number(key), user[key]]);
-      // console.log("arr", arr);
+      // console.log("arr", arr);align="center"
     },
     handleImport(){
       this.$router.push("/admin/teacher/upload/"+this.$route.params.id);
     },
     async handleEdit(index, row) {
       this.dialogEdit = true;
-      console.log("row",row)
       const res = await this.getTeacherById(row.id);
       const user = res.data;
       // console.log("user", user);
       this.teacherObj = user.data;
-      console.log("Teacher", this.teacherObj);
       this.form.gender = user.data.gender;
   
     },
@@ -448,9 +467,7 @@ export default {
       const res = await this.getTeacherById(row.id);
       const user = res.data;
       this.levelObj = row;
-      console.log("row", row);
       this.teacherObj = user.data;
-      console.log("this.teacherObj",this.teacherObj);
     },
     confirmDelete() {
       let url = "http://localhost:8000/api/admin/teacher/" + this.levelObj.id;
@@ -619,4 +636,9 @@ export default {
 .left-10 {
   left: 10%;
 }
+div.right{
+  
+    /* align-content: right; */
+    margin-left: 850px; 
+        }
 </style>

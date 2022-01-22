@@ -8,94 +8,158 @@
       <b-row>
         <b-col>
           <b-card no-body>
-            <b-card-header class="border-0">
-              <h3 class="mb-0">Class List</h3>
-            </b-card-header>
+            <b-tabs card>
+            <b-tab title="Semester 1" active >
+              <b-card-header class="border-0">
+                <h3 class="mb-0">Class List</h3>
+              </b-card-header>
+              <el-table
+                class="table-responsive table"
+                header-row-class-name="thead-light"
+                :data="posts_2"
+                @selection-change="handleSelectionChange"
+              >
+          
+                <el-table-column
+                  label="FullName"
+                  min-width="150px"
+                  prop="student"
+                  align="center"
+                >
+                </el-table-column>
+                <el-table-column
+                  label="Conduct"
+                  prop="mark"
+                  min-width="80px"
+                  align="center"
+                >
+                </el-table-column>
+                <el-table-column
+                  label="Comment"
+                  prop="comment"
+                  min-width="220px"
+                  align="center"
+                >
+                </el-table-column>
+    
+                <el-table-column label="Action" min-width="120px" align="center">
+                  <template slot-scope="scope">
+                    <el-button
+                      size="mini"
+                      type="danger"
+                      @click="handleEdit(scope.$index, scope.row)"
+                      >Edit</el-button
+                    >
+          
+                  </template>
+                </el-table-column>
 
-            <el-table
-              class="table-responsive table"
-              header-row-class-name="thead-light"
-              :data="posts"
-              @selection-change="handleSelectionChange"
-            >
-        
-              <el-table-column
-                label="FullName"
-                min-width="150px"
-                prop="student.fullname"
-                align="center"
-              >
-              </el-table-column>
-              <el-table-column
-                label="Conduct"
-                prop="conduct.mark"
-                min-width="140px"
-                align="center"
-              >
-              </el-table-column>
-              <el-table-column
-                label="Comment"
-                prop="conduct.comment"
-                min-width="140px"
-                align="center"
-              >
-              </el-table-column>
-              <el-table-column
-                label="Semester"
-                prop="conduct.semester"
-                min-width="140px"
-                align="center"
-              >
-              </el-table-column>
-              <el-table-column
-                label="SchoolYear"
-                prop="conduct.schoolYear"
-                min-width="140px"
-                align="center"
-              >
-              </el-table-column>
-  
-              <el-table-column label="Action" min-width="290px" align="center">
-                <template slot-scope="scope">
-                  <el-button
-                    size="mini"
-                    type="danger"
-                    @click="handleEdit(scope.$index, scope.row)"
-                    >Edit</el-button
-                  >
-        
-                </template>
-              </el-table-column>
+              </el-table>
+              <b-card-footer class="py-4 d-flex justify-content-end position-relative">
+                <!-- <base-pagination v-model="currentPage" :per-page="20" :total="50" :@input="getTeacherData(currentPage)"></base-pagination> -->
+                <el-row class="position-absolute" v-if="multipleSelection.length > 1">
+                  <el-button type="danger" @click="dialogMultiDelete=true">Xoá các lựa chọn</el-button>
+                </el-row>
+                <b-pagination
+                  :total-rows="totalPage"
+                  v-model="currentPage"
+                  :per-page="perPage"
+                  @input="getConductData(currentPage)"
+                >
+                <template v-slot:prev-text>
+                    <a class="page-link" aria-label="Previous">
+                      <span aria-hidden="true"
+                        ><i class="fa fa-angle-left" aria-hidden="true"></i
+                      ></span>
+                    </a>
+                  </template>
+                  <template v-slot:next-text>
+                    <a class="page-link" aria-label="Next">
+                      <span aria-hidden="true"
+                        ><i class="fa fa-angle-right" aria-hidden="true"></i
+                      ></span>
+                    </a>
+                  </template>
+                </b-pagination>
+              </b-card-footer>
+            </b-tab>
 
-            </el-table>
-
-            <b-card-footer class="py-4 d-flex justify-content-end position-relative">
-              <!-- <base-pagination v-model="currentPage" :per-page="20" :total="50" :@input="getTeacherData(currentPage)"></base-pagination> -->
-              <el-row class="position-absolute" v-if="multipleSelection.length > 1">
-                <el-button type="danger" @click="dialogMultiDelete=true">Xoá các lựa chọn</el-button>
-              </el-row>
-              <b-pagination
-                :total-rows="totalPage"
-                v-model="currentPage"
-                :per-page="perPage"
-                @input="getConductData(currentPage)"
+            <b-tab title="Semester 2" >
+              <b-card-header class="border-0">
+                <h3 class="mb-0">Class List</h3>
+              </b-card-header>
+              <el-table
+                class="table-responsive table"
+                header-row-class-name="thead-light"
+                :data="posts_3"
+                @selection-change="handleSelectionChange"
               >
-              <template v-slot:prev-text>
-                  <a class="page-link" aria-label="Previous">
-                    <span aria-hidden="true"
-                      ><i class="fa fa-angle-left" aria-hidden="true"></i
-                    ></span>
-                  </a>
-                </template>
-                <template v-slot:next-text>
-                  <a class="page-link" aria-label="Next">
-                    <span aria-hidden="true"
-                      ><i class="fa fa-angle-right" aria-hidden="true"></i
-                    ></span>
-                  </a>
-                </template>
-              </b-pagination>
-            </b-card-footer>
+          
+                <el-table-column
+                  label="FullName"
+                  min-width="150px"
+                  prop="student"
+                  align="center"
+                >
+                </el-table-column>
+                <el-table-column
+                  label="Conduct"
+                  prop="mark"
+                  min-width="80px"
+                  align="center"
+                >
+                </el-table-column>
+                <el-table-column
+                  label="Comment"
+                  prop="comment"
+                  min-width="220px"
+                  align="center"
+                >
+                </el-table-column>
+    
+                <el-table-column label="Action" min-width="120px" align="center">
+                  <template slot-scope="scope">
+                    <el-button
+                      size="mini"
+                      type="danger"
+                      @click="handleEdit(scope.$index, scope.row)"
+                      >Edit</el-button
+                    >
+          
+                  </template>
+                </el-table-column>
+
+              </el-table>
+              <b-card-footer class="py-4 d-flex justify-content-end position-relative">
+                <!-- <base-pagination v-model="currentPage" :per-page="20" :total="50" :@input="getTeacherData(currentPage)"></base-pagination> -->
+                <el-row class="position-absolute" v-if="multipleSelection.length > 1">
+                  <el-button type="danger" @click="dialogMultiDelete=true">Xoá các lựa chọn</el-button>
+                </el-row>
+                <b-pagination
+                  :total-rows="totalPage"
+                  v-model="currentPage"
+                  :per-page="perPage"
+                  @input="getConductData(currentPage)"
+                >
+                <template v-slot:prev-text>
+                    <a class="page-link" aria-label="Previous">
+                      <span aria-hidden="true"
+                        ><i class="fa fa-angle-left" aria-hidden="true"></i
+                      ></span>
+                    </a>
+                  </template>
+                  <template v-slot:next-text>
+                    <a class="page-link" aria-label="Next">
+                      <span aria-hidden="true"
+                        ><i class="fa fa-angle-right" aria-hidden="true"></i
+                      ></span>
+                    </a>
+                  </template>
+                </b-pagination>
+              </b-card-footer>
+            </b-tab>
+
+            </b-tabs>
           </b-card>
         </b-col>
       </b-row>
@@ -177,6 +241,7 @@ import Vue from "vue";
 import Vuelidate from 'vuelidate';
 Vue.use(Vuelidate);
 import { mapGetters } from "vuex";
+import { values } from 'd3';
 Vue.prototype.$confirm = MessageBox.confirm;
 
 export default {
@@ -215,6 +280,8 @@ export default {
       totalPage: 1,
       perPage: 1,
       posts: [],
+      posts_2 :[],
+      posts_3: [],
       keyword: null,
       dialogVisible: false,
       dialogEdit: false,
@@ -261,13 +328,36 @@ export default {
           this.perPage = res.data.data.per_page;
           this.totalPage = res.data.data.total;
           this.posts = res.data.data;
-
-      
+          console.log("conduct", this.posts)
+          this.posts.forEach(element => {
+            // console.log(element.conduct)
+            element.conduct.forEach(value => {
+              if(value.semester == 1)
+              {
+                var objConduct = {
+                student: element.student.fullname,
+                mark: value.mark,
+                comment: value.comment,
+              } 
+              this.posts_2.push(objConduct)
+              }else {
+                var objConduct = {
+                student: element.student.fullname,
+                mark: value.mark,
+                comment: value.comment,
+              } 
+              this.posts_3.push(objConduct)
+              }
+              
+            })
+          });          
+          console.log("this.posts_2", this.posts_2)
         })
         .catch((err) => {
           alert(err);
         });
     },
+
     handleSelectionChange(val) {
       // this.currentRow = val;
       this.multipleSelection = val;
@@ -305,7 +395,6 @@ export default {
     },
     async handleEdit(index, row) {
       this.dialogEdit = true;
-      console.log("row",row)
       const res = await this.getConductById(row.id);
       const user = res.data;
       console.log("user",res);

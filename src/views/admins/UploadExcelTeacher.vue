@@ -40,10 +40,10 @@
       </el-main>
       <div style="text-align: center;">
       <el-button type="success" @click="handleUpload" v-if="dalen > 0" 
-        >Hoàn thành</el-button
+        >Upload</el-button
       >
       <el-button type="danger" @click="handleRemove" v-if="dalen > 0" 
-        >Huỷ</el-button
+        >Cancel</el-button
       >
       </div>
 

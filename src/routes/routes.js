@@ -79,7 +79,7 @@ const routes = [
     children: [
       {
         path: 'dashboard',
-        name: 'dashboard',
+        name: 'Home',
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
@@ -117,7 +117,7 @@ const routes = [
       },
       {
         path: 'teacher/subject',
-        name: 'subject',
+        name: 'subject list',
         component: () => import(/* webpackChunkName: "demo" */ '../views/admins/TeacherSubjectManagement.vue')
       },
       {

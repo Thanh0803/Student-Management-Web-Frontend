@@ -12,7 +12,7 @@
                     <b-col>
                         <b-card no-body>
                         <el-table
-                            class="table-responsive table"
+                            class="table-responsive"
                             header-row-class-name="thead-light"
                             :data="posts"
                         >
@@ -70,7 +70,7 @@
                     <b-col>
                         <b-card no-body>
                         <el-table
-                            class="table-responsive table"
+                            class="table-responsive "
                             header-row-class-name="thead-light"
                             :data="posts_2"
                         >
@@ -129,7 +129,7 @@
                     <b-col>
                         <b-card no-body>
                         <el-table
-                            class="table-responsive table"
+                            class="table-responsive"
                             header-row-class-name="thead-light"
                             :data="posts_3"
                         >
@@ -350,7 +350,7 @@ export default {
       get(url)
         .then((res) => {
           this.post = res.data;
-          console.log(this.post)
+          console.log("XXX",this.post)
           let very_good = parseFloat(this.post.very_good/this.post.total)*100
           let good = parseFloat(this.post.good/this.post.total)*100
           let average = parseFloat(this.post.average/this.post.total)*100

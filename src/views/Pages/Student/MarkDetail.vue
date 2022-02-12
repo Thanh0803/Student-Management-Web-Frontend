@@ -7,7 +7,7 @@
           <b-tabs card>
             <b-tab title="Semester 1" active>
               <b-row>
-                <b-col>b-card
+                <b-col>
                   <b-card no-body>
                     <b-card-header class="border-0">
                       <h3 class="mb-0">Mark Detail</h3>
@@ -290,7 +290,7 @@ export default {
           this.totalPage = res.data.meta.total;
           this.post_2 = res.data.data;
           var temp = res.data.data;
-          // console.log("this.posts2",this.post_2)
+          console.log("this.posts2",this.post_2)
           
           let arr_subject = []
           let arr_fif = []
@@ -300,10 +300,15 @@ export default {
           temp.forEach((element, index_element)=>{
               
               {
-                var object_subject = {message : 'subject.subjectName'}
-                arr_subject.push(object_subject)
+                if (index_element == 0)
+                {
+                  var object_subject = {message : 'subject.subjectName'}
+                  arr_subject.push(object_subject)
+                } 
+                
               }
           });
+          // arr_subject.push(temp[0].subject.subjectName)
           temp[0].fif.forEach((value, index) => {
             var object_fif = {message : 'fif['+index +"].mark"}
             arr_fif.push(object_fif)
@@ -320,7 +325,7 @@ export default {
           
 
           this.items_subject = arr_subject
-          // console.log(" this.items_subject", this.items_subject)
+          console.log(" this.items_subject", this.items_subject)
           this.items_fif = arr_fif 
           // console.log(" this.items_fif", this.items_fif)
           this.items_fort = arr_fort 

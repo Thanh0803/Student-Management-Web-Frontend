@@ -9,7 +9,7 @@
         <b-col>
           <b-card no-body>
             <b-card-header class="border-0">
-              <h3 class="mb-0">Student List</h3>
+              <h3 class="mb-0">Student List - 10C1</h3>
      
             <div class="right">
             <el-button 
@@ -21,7 +21,7 @@
             </div>
             </b-card-header>
             <el-table
-              class="table-responsive table"
+              class="table-responsive"
               header-row-class-name="thead-light"
               :data="posts"
               @selection-change="handleSelectionChange"
@@ -31,20 +31,20 @@
 
               <el-table-column
                 align="center"
-                label="FullName"
+                label="FULLNAME"
                 min-width="150px"
                 prop="student.fullname"
               >
               </el-table-column>
               <el-table-column
                 align="center"
-                label="TelePhone"
+                label="TELEPHONE"
                 prop="student.phone"
                 min-width="140px"
               >
               </el-table-column>
               <el-table-column
-                label="Email"
+                label="EMAIL"
                 prop="student.email"
                 min-width="140px"
               >
@@ -122,7 +122,7 @@
           ></el-col>
           <el-col :span="16"
             ><div class="grid-content">
-                <h3 class="mb-0">Thông tin cơ bản</h3>
+                <h3 class="mb-0">Information</h3>
               <br />
               <el-table :data="student" style="width: 100%">
                 <el-table-column prop="key" label="Thông tin" width="180">
@@ -349,6 +349,6 @@ export default {
 div.right{
   
     /* align-content: right; */
-    margin-left: 750px; 
+    margin-left: 820px; 
         }
 </style>

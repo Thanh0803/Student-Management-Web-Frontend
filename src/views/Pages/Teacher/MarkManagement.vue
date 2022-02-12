@@ -16,7 +16,7 @@
                     </b-card-header>
 
                     <el-table
-                      class="table-responsive table"
+                      class="table-responsive "
                       header-row-class-name="thead-light"
                       :data="posts"
                       @selection-change="handleSelectionChange"
@@ -139,7 +139,7 @@
                     </b-card-header>
 
                     <el-table
-                      class="table-responsive table"
+                      class="table-responsive "
                       header-row-class-name="thead-light"
                       :data="posts_2"
                       @selection-change="handleSelectionChange"

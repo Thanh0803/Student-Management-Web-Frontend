@@ -4,7 +4,7 @@
             <h3 class="mb-0">Light table</h3>
         </b-card-header>
 
-        <el-table class="table-responsive table"
+        <el-table class="table-responsive "
                   header-row-class-name="thead-light"
                   :data="projects">
             <el-table-column label="Project"

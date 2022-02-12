@@ -29,7 +29,7 @@
                 Add Class</el-button>
             </div>
             <el-table
-              class="table-responsive table"
+              class="table-responsive "
               header-row-class-name="thead-light"
               :data="posts"
               @selection-change="handleSelectionChange"
@@ -39,22 +39,22 @@
 
               <el-table-column
                 align="center"
-                label="ClassName"
+                label="CLASSNAME"
                 min-width="150px"
                 prop="className"
               >
               </el-table-column>
               <el-table-column
                 align="center"
-                label="HeadTeacher"
+                label="HEAD TEACHER"
                 prop="headTeacher"
                 min-width="140px"
               >
               </el-table-column>
               <el-table-column
                 align="center"
-                label="SchoolYear"
-                prop="schoolYear"
+                label="TELEPHONE"
+                prop="phone"
                 min-width="140px"
               >
               </el-table-column>
@@ -379,7 +379,7 @@ export default {
         this.text = '2020'
       }
       let url = "http://localhost:8000/api/admin/grade/schoolyear/" + this.text+"/"+ this.$route.params.id +"?page="+ this.currentPage ;
-      // console.log("URL",url);
+      console.log("URL",url);
       
       get(url)
         .then((res) => {
@@ -592,6 +592,6 @@ export default {
 div.right{
   
     /* align-content: right; */
-    margin-left: 870px; 
+    margin-left: 850px; 
         }
 </style>

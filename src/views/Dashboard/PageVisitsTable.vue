@@ -9,7 +9,7 @@
       </b-row>
     </template>
 
-    <el-table class="table-responsive table"
+    <el-table class="table-responsive "
               :data="tableData"
               header-row-class-name="thead-light">
       <el-table-column label="Page name"

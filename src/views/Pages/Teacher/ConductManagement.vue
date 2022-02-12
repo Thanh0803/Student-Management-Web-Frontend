@@ -14,7 +14,7 @@
                 <h3 class="mb-0">Class List</h3>
               </b-card-header>
               <el-table
-                class="table-responsive table"
+                class="table-responsive"
                 header-row-class-name="thead-light"
                 :data="posts_2"
                 @selection-change="handleSelectionChange"
@@ -89,7 +89,7 @@
                 <h3 class="mb-0">Class List</h3>
               </b-card-header>
               <el-table
-                class="table-responsive table"
+                class="table-responsive "
                 header-row-class-name="thead-light"
                 :data="posts_3"
                 @selection-change="handleSelectionChange"

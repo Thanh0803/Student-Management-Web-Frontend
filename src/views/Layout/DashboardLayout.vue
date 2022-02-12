@@ -15,7 +15,7 @@
                   :link="{
                     name: 'Teacher Management',
                     path: '/admin/teacher/subject',
-                    icon: 'ni ni-key-25 text-info'
+                    icon: 'ni ni-single-02 text-danger'
                   }"
         >
         </sidebar-item>
@@ -23,7 +23,7 @@
                 :link="{
                   name: 'Student Management',
                   path: '/admin/student',
-                  icon: 'ni ni-key-25 text-info'
+                  icon: 'ni ni-circle-08 text-success'
                 }"
         > 
           <sidebar-item
@@ -41,7 +41,7 @@
                   :link="{
                     name: 'Mark Report',
                     path: '/admin',
-                    icon: 'ni ni-key-25 text-info'
+                    icon: 'ni ni-map-big text-info'
                   }"
         >
           <sidebar-item 
@@ -69,7 +69,7 @@
                   :link="{
                     name: 'Conduct Report',
                     path: '/admin',
-                    icon: 'ni ni-key-25 text-info'
+                    icon: 'ni ni-single-copy-04 text-warning'
                   }"
         >
           <sidebar-item 
@@ -131,7 +131,7 @@
                   :link="{
                     name: 'Subject Management',
                     path: '/admin/test&mark',
-                    icon: 'ni ni-key-25 text-info'
+                    icon: 'ni ni-single-02 text-success'
                   }"
         >
           <sidebar-item
@@ -165,7 +165,7 @@
           :link="{
             name: 'Mark Detail',
             path: '/student',
-            icon: 'ni ni-tv-2 text-primary',
+            icon: 'ni ni-air-baloon text-primary',
           }"
         >
           <sidebar-item 
@@ -185,7 +185,7 @@
           :link="{
             name: 'Conduct Detail',
             path: '/student/conduct/',
-            icon: 'ni ni-tv-2 text-primary',
+            icon: 'ni ni-app text-warning',
           }"
         >
         </sidebar-item>

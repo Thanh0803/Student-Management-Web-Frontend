@@ -21,7 +21,7 @@
                     <b-col>
                         <b-card no-body>
                         <el-table
-                            class="table-responsive table"
+                            class="table-responsive"
                             header-row-class-name="thead-light"
                             :data="posts"
                         >
@@ -79,7 +79,7 @@
                     <b-col>
                         <b-card no-body>
                         <el-table
-                            class="table-responsive table"
+                            class="table-responsive "
                             header-row-class-name="thead-light"
                             :data="posts_2"
                         >
@@ -138,7 +138,7 @@
                     <b-col>
                         <b-card no-body>
                         <el-table
-                            class="table-responsive table"
+                            class="table-responsive "
                             header-row-class-name="thead-light"
                             :data="posts_3"
                         >

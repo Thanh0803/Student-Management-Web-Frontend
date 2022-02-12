@@ -13,7 +13,7 @@
 
 
     <el-table
-      class="table-responsive table"
+      class="table-responsive "
       :data="tableData"
       header-row-class-name="thead-light">
       <el-table-column label="Referral" min-width="115px" prop="name">

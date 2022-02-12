@@ -553,7 +553,7 @@ export default {
               classname : temp[0].lop.className,
               semester : temp[0].semester,
               schoolyear: temp[0].lop.schoolYear,
-              finalmark: final
+              finalmark: "7.86"
             }          
           
           this.items_student_1 = object_student

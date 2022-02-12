@@ -18,7 +18,7 @@
                 </div>
             </div>
             <b-card-header class="border-0">
-              <h3 class="mb-0">Teacher List</h3>
+              <h3 class="mb-0">Grade 10 - Math</h3>
             </b-card-header>
             <div class="right" >
             <el-button 
@@ -30,7 +30,7 @@
             </div>
 
             <el-table
-              class="table-responsive table"
+              class="table-responsive"
               header-row-class-name="thead-light"
               :data="posts"
               @selection-change="handleSelectionChange"
@@ -40,21 +40,21 @@
 
               <el-table-column
                 align="center"
-                label=" Fullname"
+                label=" FULLNAME"
                 min-width="150px"
                 prop="teacher.fullname"
               >
               </el-table-column>
               <el-table-column
                 align="center"
-                label="Telephone Number"
+                label="TELEPHONE NUMBER"
                 prop="teacher.phone"
                 min-width="140px"
               >
               </el-table-column>
               <el-table-column
                 align="center"
-                label="ClassName"
+                label="CLASSNAME"
                 min-width="110px"
                 prop="lop.className"
               >    
@@ -121,7 +121,7 @@
       <!-- <div class="mt-5"></div>
       <dark-table></dark-table> -->
       <el-dialog
-        title="Thông tin chi tiết giáo viên"
+        title="Detail Information of Teacher"
         :visible.sync="dialogVisible"
         width="70%"
       >
@@ -140,12 +140,12 @@
           </el-col>
           <el-col :span="16"
             ><div class="grid-content">
-              <h3 class="mb-0">Thông tin cơ bản</h3>
+              
               <br />
               <el-table :data="teacher" style="width: 100%" border>
-                <el-table-column prop="key" label="Thông tin">
+                <el-table-column prop="key" label="Information">
                 </el-table-column>
-                <el-table-column prop="name" label="Nội dung">
+                <el-table-column prop="name" label="Content">
                 </el-table-column>
               </el-table></div
           ></el-col>
@@ -158,7 +158,7 @@
         </span>
       </el-dialog>
       <el-dialog
-        title="Chỉnh sửa thông tin giáo viên"
+        title="Edit Teacher's Information"
         :visible.sync="dialogEdit"
         :before-close="handleClose"
         width="70%"
@@ -213,7 +213,7 @@
         width="30%"
         center
       >
-        <span>Bạn có muốn xoá người này</span>
+        <span>Do you want to delete this person ?</span>
         <span slot="footer" class="dialog-footer">
           <el-button type="primary" @click="confirmDelete">Confirm</el-button>
           <el-button @click="dialogDelete = false">Cancle</el-button>
@@ -639,6 +639,6 @@ export default {
 div.right{
   
     /* align-content: right; */
-    margin-left: 850px; 
+    margin-left: 820px; 
         }
 </style>
